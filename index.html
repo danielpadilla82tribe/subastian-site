@@ -1,0 +1,468 @@
+<title>Subastian</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#F8F7FC;
+    --bg-band:#F1EDFA;
+    --surface:#FFFFFF;
+    --ink:#15132A;
+    --ink-soft:#5C5678;
+    --ink-faint:#8B84A8;
+    --line:#E2DCF2;
+    --accent:#6D28D9;
+    --accent-strong:#54169E;
+    --accent-tint:#ECE3FB;
+    --accent-fill:#6D28D9;
+    --money:#0E9D6E;
+    --focus:#6D28D9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B0A14;
+      --bg-band:#131024;
+      --surface:#18142C;
+      --ink:#F2EFFA;
+      --ink-soft:#B4ADCF;
+      --ink-faint:#7C7599;
+      --line:#2B2745;
+      --accent:#B296F5;
+      --accent-strong:#D2C0FA;
+      --accent-tint:#241D3E;
+      --accent-fill:#7C4DEB;
+      --money:#3FDDA0;
+      --focus:#B296F5;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B0A14;
+    --bg-band:#131024;
+    --surface:#18142C;
+    --ink:#F2EFFA;
+    --ink-soft:#B4ADCF;
+    --ink-faint:#7C7599;
+    --line:#2B2745;
+    --accent:#B296F5;
+    --accent-strong:#D2C0FA;
+    --accent-tint:#241D3E;
+    --accent-fill:#7C4DEB;
+    --money:#3FDDA0;
+    --focus:#B296F5;
+  }
+
+  *{box-sizing:border-box;}
+  html{color-scheme:light dark;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--accent-tint); color:var(--accent-strong);}
+  a{color:inherit;}
+  h1,h2,h3{
+    font-family:'Plus Jakarta Sans','Inter',sans-serif;
+    color:var(--ink);
+    line-height:1.08;
+    text-wrap:balance;
+    margin:0;
+  }
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+  img,svg{max-width:100%;display:block;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:4px;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
+  }
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+  .prose{max-width:640px;}
+
+  /* ---- top bar ---- */
+  .topbar{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 28px; max-width:1040px; margin:0 auto;
+  }
+  .brand{
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:800;
+    font-size:18px; letter-spacing:.02em;
+  }
+  .brand span{color:var(--accent);}
+  .topbar-links{display:flex; gap:24px; align-items:center;}
+  .topbar-links a{
+    font-size:13px; font-weight:600; text-decoration:none; color:var(--ink-soft);
+  }
+  .topbar-links a:hover{color:var(--accent);}
+  .btn-cta{
+    background:var(--accent-fill); color:#fff; border:none; border-radius:8px;
+    padding:10px 18px; font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px;
+    cursor:pointer; text-decoration:none; display:inline-block;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .btn-cta:hover{ box-shadow:0 8px 20px -8px var(--accent); transform:translateY(-1px); }
+
+  /* ---- eyebrow / movement marker ---- */
+  .movement-mark{
+    display:flex; align-items:baseline; gap:14px; margin-bottom:18px;
+  }
+  .movement-mark .num{
+    font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:600;
+    color:var(--accent); letter-spacing:.06em;
+  }
+  .movement-mark .label{
+    font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.14em; color:var(--ink-faint);
+  }
+  .movement-mark::after{
+    content:""; flex:1; height:1px; background:var(--line);
+  }
+
+  section{padding:88px 0;}
+  .band{background:var(--bg-band);}
+
+  /* ---- hero ---- */
+  .hero{padding:64px 0 96px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
+    letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
+    margin-bottom:18px;
+  }
+  .hero h1{
+    font-size:clamp(34px,5.4vw,56px); font-weight:800; letter-spacing:-.02em;
+    max-width:14ch;
+  }
+  .hero .sub{
+    margin-top:22px; font-size:17px; color:var(--ink-soft); max-width:52ch;
+  }
+  .hero-actions{display:flex; align-items:center; gap:18px; margin-top:34px; flex-wrap:wrap;}
+  .hero-note{font-size:13px; color:var(--ink-faint);}
+
+  /* ---- problem stats ---- */
+  .stat-row{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:14px;
+    overflow:hidden; margin-top:36px;
+  }
+  .stat{background:var(--surface); padding:26px 22px;}
+  .stat b{
+    display:block; font-family:'IBM Plex Mono',monospace; font-size:clamp(24px,3.4vw,32px);
+    font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums;
+  }
+  .stat span{font-size:12.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em;}
+  .cite{margin-top:14px; font-size:12.5px; color:var(--ink-faint); font-style:italic;}
+  .honesty-note{
+    margin-top:18px; padding:14px 16px; border-left:2px solid var(--accent);
+    background:var(--accent-tint); border-radius:0 8px 8px 0; font-size:13px; color:var(--ink-soft);
+  }
+
+  /* ---- solution grid ---- */
+  .feature-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:14px; overflow:hidden;
+    margin-top:40px;
+  }
+  .feature{background:var(--surface); padding:30px 28px;}
+  .feature .icon{width:30px; height:30px; color:var(--accent); margin-bottom:16px;}
+  .feature h3{font-size:17px; font-weight:700;}
+  .feature p{margin:10px 0 0; font-size:14px; color:var(--ink-soft);}
+
+  /* ---- how it works ---- */
+  .flow{display:flex; align-items:flex-start; gap:0; margin-top:44px; flex-wrap:wrap;}
+  .flow-step{flex:1; min-width:150px; text-align:left; position:relative; padding-right:18px;}
+  .flow-step .n{
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--accent);
+    border:1px solid var(--accent); border-radius:999px; width:26px; height:26px;
+    display:flex; align-items:center; justify-content:center; margin-bottom:14px;
+  }
+  .flow-step h4{font-size:14.5px; font-weight:700; margin:0 0 6px;}
+  .flow-step p{margin:0; font-size:13px; color:var(--ink-faint);}
+
+  /* ---- pricing ---- */
+  .price-note{font-size:13.5px; color:var(--ink-faint); margin-top:8px;}
+  .price-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:36px;
+  }
+  .price-card{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px;
+    padding:28px 24px; display:flex; flex-direction:column; gap:14px;
+  }
+  .price-card.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
+  .price-tier{font-size:13px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em;}
+  .price-amt{font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:600; font-variant-numeric:tabular-nums;}
+  .price-amt small{font-size:13px; font-weight:500; color:var(--ink-faint);}
+  .price-card ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
+  .price-card li{font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative;}
+  .price-card li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
+  .badge{
+    align-self:flex-start; background:var(--accent-tint); color:var(--accent-strong);
+    font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; letter-spacing:.03em;
+  }
+
+  /* ---- finale / waitlist ---- */
+  .finale{padding:96px 0 100px;}
+  .finale-inner{
+    background:var(--ink); color:var(--bg); border-radius:22px; padding:56px 48px;
+    display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:start;
+  }
+  :root[data-theme="dark"] .finale-inner, .finale-inner{ }
+  .finale-inner h2{color:#fff; font-size:clamp(26px,3.4vw,34px);}
+  .finale-inner .sub{color:#C9C3E0; font-size:14.5px; margin-top:14px; max-width:42ch;}
+  .roster-status{margin-top:26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#9C93C4;}
+  form{display:flex; flex-direction:column; gap:12px;}
+  .field{display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:11.5px; font-weight:600; color:#B4ABDA; text-transform:uppercase; letter-spacing:.07em;}
+  .field input, .field select{
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18); color:#fff;
+    border-radius:8px; padding:11px 12px; font-family:'Inter',sans-serif; font-size:14px;
+  }
+  .field input::placeholder{color:#8981AC;}
+  .field input:focus, .field select:focus{outline:2px solid #B296F5; outline-offset:2px; border-color:transparent;}
+  .field select option{color:#000;}
+  .submit-row{margin-top:6px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .btn-submit{
+    background:#fff; color:var(--ink); border:none; border-radius:8px; padding:12px 20px;
+    font-weight:700; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
+  }
+  .btn-submit:hover{background:#EDE7FB;}
+  .submit-hint{font-size:12px; color:#8981AC;}
+  .confirm-msg{
+    display:none; background:rgba(63,221,160,.12); border:1px solid rgba(63,221,160,.4);
+    color:#7CF0C0; border-radius:10px; padding:14px 16px; font-size:13.5px; margin-top:4px;
+  }
+  .confirm-msg.show{display:block;}
+
+  footer{padding:40px 0 56px;}
+  .foot-row{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    border-top:1px solid var(--line); padding-top:24px; font-size:12.5px; color:var(--ink-faint);
+  }
+
+  @media (max-width:760px){
+    .stat-row{grid-template-columns:1fr;}
+    .feature-grid{grid-template-columns:1fr;}
+    .price-grid{grid-template-columns:1fr;}
+    .finale-inner{grid-template-columns:1fr; padding:36px 26px;}
+    .topbar{flex-wrap:wrap; gap:12px;}
+  }
+
+  .brand{ display:flex; align-items:center; gap:8px; }
+  .brand-mark{ width:24px; height:24px; object-fit:contain; }
+
+  .hero-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:44px; align-items:center; }
+  .hero-art img{ width:100%; display:block; border-radius:20px; box-shadow:0 30px 70px -30px rgba(109,40,217,.5); }
+
+  .leak-grid{ display:grid; grid-template-columns:1.3fr .85fr; gap:44px; align-items:center; }
+  .leak-art img{ width:100%; max-width:320px; margin:0 auto; display:block; border-radius:18px; box-shadow:0 24px 50px -24px rgba(0,0,0,.35); }
+
+  .score-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:28px; }
+  .score-art{ width:126px; height:126px; object-fit:cover; border-radius:50%; flex-shrink:0; box-shadow:0 20px 44px -20px rgba(109,40,217,.55); border:1px solid var(--line); }
+
+  @media (max-width:760px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .leak-grid{ grid-template-columns:1fr; }
+    .leak-art img{ max-width:220px; }
+    .score-head{ flex-direction:column; align-items:flex-start; }
+    .score-art{ width:88px; height:88px; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="brand"><img class="brand-mark" src="emblem.png" alt="" width="24" height="24">SUBA<span>STIAN</span></div>
+  <div class="topbar-links">
+    <a href="#pricing">Pricing</a>
+    <a href="#waitlist" class="btn-cta">Join the Roster</a>
+  </div>
+</div>
+
+<div class="wrap">
+  <section class="hero hero-grid">
+    <div>
+      <div class="eyebrow">Subastian · Pre-launch</div>
+      <h1>Stop conducting your subscriptions by accident.</h1>
+      <p class="sub">Subastian groups your software into cost-efficient stacks, blocks duplicate purchases before you make them, and never lets a tool expire without warning you first. We're in active development right now — join the founding roster to help shape it and lock in launch pricing.</p>
+      <div class="hero-actions">
+        <a href="#waitlist" class="btn-cta">Join the Founding Roster</a>
+        <span class="hero-note">Built for affiliate marketers, agencies &amp; IT teams juggling a lot of tools.</span>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img src="hero.jpg" alt="Illustration of a conductor directing a ring of orbiting subscription icons" loading="lazy">
+    </div>
+  </section>
+</div>
+
+<div class="band">
+  <div class="wrap" style="padding:88px 0;">
+    <div class="leak-grid">
+      <div>
+        <div class="movement-mark"><span class="num">I.</span><span class="label">The Leak</span></div>
+        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">The average professional pays for 17 tools. Uses nine.</h2>
+        <p class="prose" style="margin-top:16px; color:var(--ink-soft);">The other eight keep renewing quietly in the background. Industry research puts the average waste at $2,847 a year per person — and it's climbing as more AI tools get added to everyone's stack.</p>
+        <div class="stat-row">
+          <div class="stat"><b>17</b><span>Avg. subscriptions held</span></div>
+          <div class="stat"><b>9</b><span>Avg. actually used</span></div>
+          <div class="stat"><b>$2,847</b><span>Wasted per year, avg.</span></div>
+        </div>
+        <div class="cite">Source: Capterra, 2024 subscription-spend survey — industry-wide figures, not Subastian customer data. We're pre-launch, so we don't have customer numbers yet.</div>
+      </div>
+      <div class="leak-art"><img src="vase.jpg" alt="A cracked vessel spilling app icons and coins, illustrating subscription waste" loading="lazy"></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <section>
+    <div class="score-head">
+      <div>
+        <div class="movement-mark"><span class="num">II.</span><span class="label">The Score</span></div>
+        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:18ch;">Four moves, one conductor.</h2>
+        <p class="prose" style="margin-top:14px; color:var(--ink-soft);">Here's what Subastian is built to do — the mechanics, not the marketing.</p>
+      </div>
+      <img class="score-art" src="orrery.jpg" alt="A brass and amethyst armillary sphere, echoing how Subastian orbits your tools around one center" loading="lazy">
+    </div>
+    <div class="feature-grid">
+      <div class="feature">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
+        <h3>Niche Stacks</h3>
+        <p>Tell it your niche — YouTube automation, SEO agency, podcast production — and it recommends the cheapest set of tools that actually work together, instead of you researching each one yourself.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.4-3 8.2-7 9-4-.8-7-4.6-7-9V6l7-3z"/></svg>
+        <h3>Purchase Guard</h3>
+        <p>Before you buy a new tool, it checks your existing stack for heavy feature overlap and flags it if you're about to pay twice for the same job.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>
+        <h3>Neglect Radar</h3>
+        <p>Tracks which tools have gone quiet. Something unused for two weeks gets flagged with a one-click "pause and save" suggestion.</p>
+      </div>
+      <div class="feature">
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a5 5 0 00-5 5v3.5L5 15h14l-2-3.5V8a5 5 0 00-5-5z"/><path d="M10 18a2 2 0 004 0"/></svg>
+        <h3>Escalating Alerts</h3>
+        <p>A tool set to auto-renew earns five warnings — at 30, 7, 3 and 1 days out, then the day it happens — by email and push, so nothing lapses because of one missed message.</p>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="band">
+  <div class="wrap" style="padding:88px 0;">
+    <div class="movement-mark"><span class="num">III.</span><span class="label">The Rehearsal</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:16ch;">How it's designed to work.</h2>
+    <div class="flow">
+      <div class="flow-step"><div class="n mono">1</div><h4>Select niche</h4><p>Tell Subastian what kind of work you do.</p></div>
+      <div class="flow-step"><div class="n mono">2</div><h4>Get your stack</h4><p>It proposes the cheapest tool set that covers it.</p></div>
+      <div class="flow-step"><div class="n mono">3</div><h4>Guard activated</h4><p>Duplicate-purchase checks turn on automatically.</p></div>
+      <div class="flow-step"><div class="n mono">4</div><h4>Alerts on</h4><p>Renewal and neglect warnings start tracking your stack.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap" id="pricing">
+  <section>
+    <div class="movement-mark"><span class="num">IV.</span><span class="label">Choose Your Baton</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:16ch;">Planned launch pricing.</h2>
+    <p class="price-note">Nothing is live or billing yet. Roster members who sign up before launch keep these rates locked in.</p>
+    <div class="price-grid">
+      <div class="price-card">
+        <div class="price-tier">Starter</div>
+        <div class="price-amt">$49<small>/mo</small></div>
+        <ul>
+          <li>1 niche, 1 stack</li>
+          <li>Purchase Guard</li>
+          <li>Standard alerts</li>
+        </ul>
+      </div>
+      <div class="price-card featured">
+        <span class="badge">Most anticipated</span>
+        <div class="price-tier">Conductor Pro</div>
+        <div class="price-amt">$99<small>/mo</small></div>
+        <ul>
+          <li>Unlimited stacks</li>
+          <li>Neglect Radar</li>
+          <li>Team seats</li>
+        </ul>
+      </div>
+      <div class="price-card">
+        <div class="price-tier">Agency Maestro</div>
+        <div class="price-amt">$299<small>/mo</small></div>
+        <ul>
+          <li>Up to 20 client accounts</li>
+          <li>White-label</li>
+          <li>API access</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="wrap">
+  <section class="finale" id="waitlist">
+    <div class="movement-mark"><span class="num">V.</span><span class="label">Finale</span></div>
+    <div class="finale-inner">
+      <div>
+        <h2>Be one of the first to conduct your stack.</h2>
+        <p class="sub">We're finishing development on Subastian now. Founding roster members get early access, a say in what gets built next, and today's pricing locked in before public launch.</p>
+        <div class="roster-status" id="rosterStatus">No live signup database yet — this form emails the founder directly.</div>
+      </div>
+      <div>
+        <form id="rosterForm">
+          <div class="field">
+            <label for="rf-name">Name</label>
+            <input id="rf-name" name="name" type="text" placeholder="Jordan Lee" required>
+          </div>
+          <div class="field">
+            <label for="rf-email">Email</label>
+            <input id="rf-email" name="email" type="email" placeholder="you@example.com" required>
+          </div>
+          <div class="field">
+            <label for="rf-niche">What best describes you?</label>
+            <select id="rf-niche" name="niche">
+              <option>Affiliate marketer</option>
+              <option>Agency owner</option>
+              <option>IT / ops team</option>
+              <option>Content creator</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="submit-row">
+            <button type="submit" class="btn-submit">Reserve My Spot</button>
+            <span class="submit-hint">Opens a pre-filled email — hit send to confirm.</span>
+          </div>
+          <div class="confirm-msg" id="confirmMsg">Your email app should have opened with your details filled in. Hit send there and you're on the founding roster.</div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-row">
+      <div>Subastian, LLC · Denver, CO</div>
+      <div>Founded by Daniel Padilla · <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var form = document.getElementById('rosterForm');
+  var confirmMsg = document.getElementById('confirmMsg');
+  if(!form) return;
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = document.getElementById('rf-name').value.trim();
+    var email = document.getElementById('rf-email').value.trim();
+    var niche = document.getElementById('rf-niche').value;
+    if(!name || !email) return;
+    var subject = 'Subastian founding roster signup';
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nDescribes them as: ' + niche + '\n\n(Sent from the Subastian pre-launch page)';
+    var mailto = 'mailto:danielpadilla82tribe@gmail.com'
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+    window.location.href = mailto;
+    confirmMsg.classList.add('show');
+  });
+})();
+</script>
