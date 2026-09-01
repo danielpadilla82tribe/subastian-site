@@ -804,9 +804,105 @@
   var confirmMsg = document.getElementById('confirmMsg');
   var FOUNDER = 'danielpadilla82tribe@gmail.com';
 
+  /* ------------------------------------------------------------------
+     GoHighLevel integration
+
+     Fill in ONE of these to send signups straight into GHL. Until one is
+     set the form keeps its current behaviour and emails the founder, so
+     the page is never broken by leaving this blank.
+
+     webhookUrl — preferred. Keeps this custom form and its styling.
+       In GHL: Automation > Create Workflow > Add New Trigger >
+       Inbound Webhook. Copy the URL it gives you and paste it below, then
+       add a Create/Update Contact action mapping email, firstName,
+       lastName and niche. Note this is a premium trigger on GHL's pricing.
+
+     formId — fallback if the webhook trigger isn't on your plan. Builds
+       the form in GHL instead and swaps this one out for their embed.
+       In GHL: Sites > Forms > Builder, then take the id out of the embed
+       code (the part after /widget/form/).
+
+     Never put a GHL API key or Private Integration Token here. This file
+     is public — anything in it is readable by anyone who views source.
+     The webhook URL is write-only and safe to expose; an API key is not.
+  ------------------------------------------------------------------ */
+  var GHL = {
+    webhookUrl: '',
+    formId: ''
+  };
+
+  var confirmHtml = {
+    sent: 'You’re on the founding roster — check your inbox for a note from Daniel.',
+    mail: 'Your email app should have opened with your details filled in — hit send there and you’re on the founding roster. '
+        + 'Nothing opened? Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.'
+  };
+
+  function show(html){
+    confirmMsg.innerHTML = html;
+    confirmMsg.classList.add('show');
+  }
+
+  function mailtoFallback(name, email, niche){
+    var subject = 'Subastian founding roster signup';
+    var body = 'Name: ' + name + '\nEmail: ' + email + '\nDescribes them as: ' + niche + '\n\n(Sent from the Subastian pre-launch page)';
+    show(confirmHtml.mail);
+    window.location.href = 'mailto:' + FOUNDER
+      + '?subject=' + encodeURIComponent(subject)
+      + '&body=' + encodeURIComponent(body);
+  }
+
+  function postToGHL(payload){
+    // Try a real CORS request first: if GHL answers with the right headers
+    // we get a readable response and can tell a success from a failure.
+    return fetch(GHL.webhookUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return 'cors';
+    }).catch(function(){
+      // Preflight was blocked. Retry opaquely — no-cors allows only simple
+      // content types, so the JSON goes out as text/plain, which webhook
+      // receivers parse anyway. The response is unreadable, so a resolved
+      // promise is the most we can treat as delivered.
+      return fetch(GHL.webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+        body: JSON.stringify(payload)
+      }).then(function(){ return 'opaque'; });
+    });
+  }
+
+  // Swap the custom form for GHL's hosted embed when only a formId is set.
+  if(!GHL.webhookUrl && GHL.formId && form){
+    var frame = document.createElement('iframe');
+    frame.src = 'https://api.leadconnectorhq.com/widget/form/' + GHL.formId;
+    frame.style.cssText = 'width:100%;border:none;border-radius:10px;min-height:520px;';
+    frame.title = 'Join the Subastian founding roster';
+    form.parentNode.replaceChild(frame, form);
+    var embedJs = document.createElement('script');
+    embedJs.src = 'https://api.leadconnectorhq.com/js/form_embed.js';
+    document.body.appendChild(embedJs);
+    form = null;
+  }
+
+  // With GHL wired up the form no longer just opens an email — say so.
+  if(GHL.webhookUrl){
+    var status = document.getElementById('rosterStatus');
+    var hint = document.querySelector('.submit-hint');
+    if(status) status.textContent = 'Signups go straight to our CRM. We only email you about Subastian, and you can unsubscribe in one click.';
+    if(hint) hint.textContent = 'No card, no spam. Unsubscribe anytime.';
+  }
+
   if(form){
+    var submitting = false;
+
     form.addEventListener('submit', function(e){
       e.preventDefault();
+      if(submitting) return;
+
       var nameEl = document.getElementById('rf-name');
       var emailEl = document.getElementById('rf-email');
       var name = nameEl.value.trim();
@@ -819,17 +915,31 @@
       if(!name){ nameEl.focus(); return; }
       if(!email || email.indexOf('@') < 1 || email.indexOf('.') < 0){ emailEl.focus(); return; }
 
-      var subject = 'Subastian founding roster signup';
-      var body = 'Name: ' + name + '\nEmail: ' + email + '\nDescribes them as: ' + niche + '\n\n(Sent from the Subastian pre-launch page)';
-      var mailto = 'mailto:' + FOUNDER
-        + '?subject=' + encodeURIComponent(subject)
-        + '&body=' + encodeURIComponent(body);
+      if(!GHL.webhookUrl){ mailtoFallback(name, email, niche); return; }
 
-      confirmMsg.innerHTML = 'Your email app should have opened with your details filled in — hit send there and you’re on the founding roster. '
-        + 'Nothing opened? Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.';
-      confirmMsg.classList.add('show');
+      var btn = form.querySelector('.btn-submit');
+      var label = btn ? btn.textContent : '';
+      submitting = true;
+      if(btn){ btn.disabled = true; btn.textContent = 'Reserving…'; }
 
-      window.location.href = mailto;
+      postToGHL({
+        name: name,
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ').slice(1).join(' '),
+        email: email,
+        niche: niche,
+        source: 'subastian.us founding roster',
+        submittedAt: new Date().toISOString()
+      }).then(function(){
+        show(confirmHtml.sent);
+        form.reset();
+      }).catch(function(){
+        // GHL unreachable — hand the lead to email rather than lose it.
+        mailtoFallback(name, email, niche);
+      }).then(function(){
+        submitting = false;
+        if(btn){ btn.disabled = false; btn.textContent = label; }
+      });
     });
   }
 
