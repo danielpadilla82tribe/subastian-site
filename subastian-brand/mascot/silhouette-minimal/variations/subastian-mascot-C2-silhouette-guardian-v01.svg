@@ -1,0 +1,103 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200"
+     width="1200" height="1200" role="img" aria-labelledby="t d">
+  <title id="t">Subastian conductor silhouette, guardian pose</title>
+  <desc id="d">Silhouette of a conductor extending a glowing baton to deflect a duplicate subscription tile, backlit in purple with a gold rim light.</desc>
+  <style>
+    /* Retune the brand here; nothing else needs to change.
+       If gold leaves the brand, set --gold to the same value as --purple-hi. */
+    svg { --ink: #0A0814; --purple: #6D28D9; --purple-hi: #B296F5; --gold: #D4AF37; }
+  </style>
+  <defs>
+    <radialGradient id="backlight" cx="50%" cy="42%" r="52%">
+      <stop offset="0%"   stop-color="var(--purple)" stop-opacity="0.92"/>
+      <stop offset="45%"  stop-color="var(--purple)" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="var(--purple)" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="icon-edge" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="var(--purple-hi)"/>
+      <stop offset="100%" stop-color="var(--gold)"/>
+    </linearGradient>
+    <linearGradient id="baton" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="var(--gold)" stop-opacity="0.35"/>
+      <stop offset="55%"  stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="var(--purple-hi)"/>
+    </linearGradient>
+    <radialGradient id="spark">
+      <stop offset="0%"   stop-color="#FFFFFF"/>
+      <stop offset="60%"  stop-color="var(--gold)"/>
+      <stop offset="100%" stop-color="var(--gold)" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="soft"  x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="16"/></filter>
+    <!-- Directional rim: offset the union alpha, keep only what falls outside
+         the original. Applied to the group, so interior seams never show. -->
+    <filter id="rim-gold" x="-25%" y="-25%" width="150%" height="150%">
+      <feOffset in="SourceAlpha" dx="9" dy="-8" result="o"/>
+      <feFlood flood-color="#D4AF37" result="c"/>
+      <feComposite in="c" in2="o" operator="in" result="r"/>
+      <feComposite in="r" in2="SourceAlpha" operator="out"/>
+    </filter>
+    <filter id="rim-cool" x="-25%" y="-25%" width="150%" height="150%">
+      <feOffset in="SourceAlpha" dx="-7" dy="6" result="o"/>
+      <feFlood flood-color="#B296F5" result="c"/>
+      <feComposite in="c" in2="o" operator="in" result="r"/>
+      <feComposite in="r" in2="SourceAlpha" operator="out"/>
+    </filter>
+    <filter id="tight" x="-80%" y="-80%" width="260%" height="260%">
+      <feGaussianBlur stdDeviation="6"/></filter>
+    <g id="conductor">
+
+    <path d="M 556 216 L 644 216 L 652 296 L 548 296 Z"/>
+    <ellipse cx="600" cy="304" rx="74" ry="13"/>
+    <path d="M 566 300 L 634 300 L 636 356
+             C 634 392 622 408 600 410 C 578 408 566 392 564 356 Z"/>
+    <path d="M 584 400 L 616 400 L 618 440 L 582 440 Z"/>
+    <path d="M 590 428 C 552 434 528 450 514 476 L 498 566 L 486 704
+             L 472 874 L 494 898 L 556 764 L 552 704 L 648 704 L 644 764
+             L 706 898 L 728 874 L 714 704 L 702 566 L 686 476
+             C 672 450 648 434 610 428 Z"/>
+    <path d="M 552 690 L 596 690 L 592 1030 L 600 1052 L 538 1052 L 550 1030 Z"/>
+    <path d="M 604 690 L 648 690 L 650 1030 L 662 1052 L 600 1052 L 608 1030 Z"/>
+    <path d="M 556 446 L 528 458 L 504 560 L 496 660 L 520 664 L 532 570 L 554 478 Z"/>
+    <path d="M 642 452 L 672 462 L 754 512 L 810 550 L 796 572 L 736 536 L 654 498 Z"/>
+    </g>
+  </defs>
+
+  <!-- backlight: this is what separates the figure from a dark page -->
+  <ellipse cx="600" cy="500" rx="430" ry="470" fill="url(#backlight)"/>
+
+  <!-- subscription tiles -->
+  <g>
+    <g transform="translate(1024,686) rotate(-16) translate(-38,-38)" opacity="0.85"><rect width="76" height="76" rx="19.8" fill="none" stroke="url(#icon-edge)" stroke-width="4.2"/><rect x="19.8" y="31.9" width="36.5" height="11.4" rx="5.3" fill="url(#icon-edge)" opacity="0.7"/></g>
+    <g transform="translate(1092,578) rotate(10) translate(-26,-26)" opacity="0.30"><rect width="52" height="52" rx="13.5" fill="none" stroke="url(#icon-edge)" stroke-width="2.9"/><rect x="13.5" y="21.8" width="25.0" height="7.8" rx="3.6" fill="url(#icon-edge)" opacity="0.7"/></g>
+    <g transform="translate(1078,800) rotate(-6) translate(-23,-23)" opacity="0.24"><rect width="46" height="46" rx="12.0" fill="none" stroke="url(#icon-edge)" stroke-width="2.5"/><rect x="12.0" y="19.3" width="22.1" height="6.9" rx="3.2" fill="url(#icon-edge)" opacity="0.7"/></g>
+  </g>
+
+  <!-- rim light: the same contour, offset, so gold shows only on the lit edge -->
+  <use href="#conductor" filter="url(#rim-cool)" opacity="0.5"/>
+  <use href="#conductor" filter="url(#rim-gold)"/>
+  <use href="#conductor" fill="var(--ink)"/>
+
+  <!-- baton -->
+  <g stroke-linecap="round">
+    <line x1="810" y1="570" x2="968" y2="656"
+          stroke="var(--purple-hi)" stroke-width="22" opacity="0.55" filter="url(#soft)"/>
+    <line x1="810" y1="570" x2="968" y2="656"
+          stroke="url(#baton)" stroke-width="9" filter="url(#tight)"/>
+    <line x1="810" y1="570" x2="968" y2="656"
+          stroke="url(#baton)" stroke-width="4.5"/>
+    <circle cx="968" cy="656" r="13" fill="#FFFFFF" opacity="0.9" filter="url(#tight)"/>
+    <circle cx="968" cy="656" r="4.5" fill="#FFFFFF"/>
+  </g>
+
+  <!-- particles -->
+  <g>
+    <circle cx="884" cy="600" r="4.8" fill="url(#spark)" opacity="0.85"/>
+    <circle cx="926" cy="572" r="3.2" fill="url(#spark)" opacity="0.78"/>
+    <circle cx="948" cy="632" r="2.8" fill="url(#spark)" opacity="0.71"/>
+    <circle cx="858" cy="640" r="2.4" fill="url(#spark)" opacity="0.64"/>
+    <circle cx="908" cy="664" r="2.2" fill="url(#spark)" opacity="0.57"/>
+    <circle cx="972" cy="552" r="2.6" fill="url(#spark)" opacity="0.50"/>
+    <circle cx="834" cy="608" r="2.0" fill="url(#spark)" opacity="0.43"/>
+  </g>
+</svg>

@@ -42,4 +42,25 @@ Silhouette conductor arranging glowing icons into a stack using magical baton. P
 
 ---
 
+## Hand-authored SVG alternative
+
+`variations/*.svg` holds this set built as vector rather than generated raster,
+via `build-svg.py`. Three reasons it may be the better format here:
+
+- **The character is identical across all three poses by construction.** The
+  consistency problem in `../NAMING.md` is a generative-model problem; these
+  share one geometry definition and only vary the arm, prop and staging.
+- **No background to bake.** Transparent by nature, so the light/dark question
+  does not arise.
+- **~6 KB each, and infinitely scalable.** Colors are CSS custom properties at
+  the top of each file, so the open gold decision is a one-line change rather
+  than a re-render.
+
+Verified legible down to **64px**; below that the legs, tiles and particles
+collapse. A true favicon-scale mark (16–32px) needs a further reduction — hat
+and baton only — and does not exist yet.
+
+They are a geometric mark, not cinematic art. For Sets A and B, generated
+raster is still the right call.
+
 See `../NAMING.md` for the filename spec and character-consistency workflow.
