@@ -119,19 +119,19 @@
   }
   .skip-link:focus{left:16px;}
 
-  .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 36px;}
   .prose{max-width:640px;}
 
   /* ---- top bar ---- */
   .topbar{
     display:flex; align-items:center; justify-content:space-between;
-    padding:22px 28px; max-width:1040px; margin:0 auto; gap:16px;
+    padding:22px 36px; max-width:1040px; margin:0 auto; gap:16px;
   }
   .brand{
     font-family:'Plus Jakarta Sans',sans-serif; font-weight:800;
-    font-size:18px; letter-spacing:.02em; text-decoration:none;
+    font-size:18px; letter-spacing:-.01em; text-decoration:none;
   }
-  .brand span{color:var(--accent);}
+  .brand-name > span{color:var(--accent);}
   .topbar-links{display:flex; gap:22px; align-items:center;}
   .topbar-links a{
     font-size:13px; font-weight:600; text-decoration:none; color:var(--ink-soft);
@@ -367,8 +367,8 @@
     .price-grid{grid-template-columns:1fr;}
     .finale-inner{grid-template-columns:1fr; padding:36px 26px;}
     .finale{padding:56px 0 64px;}
-    .topbar{flex-wrap:wrap; gap:12px; padding:16px 20px;}
-    .wrap{padding:0 20px;}
+    .topbar{flex-wrap:wrap; gap:12px; padding:16px 26px;}
+    .wrap{padding:0 26px;}
     .hide-sm{display:none;}
     .sticky-cta{display:block;}
     body{padding-bottom:72px;}
@@ -404,7 +404,7 @@
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="topbar">
-  <a class="brand" href="/" aria-label="Subastian home"><img class="brand-mark" src="emblem.png" alt="" width="24" height="24">SUBA<span>STIAN</span></a>
+  <a class="brand" href="/" aria-label="Subastian home"><img class="brand-mark" src="emblem.png" alt="" width="24" height="24"><span class="brand-name">SUBA<span>STIAN</span></span></a>
   <nav class="topbar-links" aria-label="Primary">
     <a href="#features" class="hide-sm">Features</a>
     <a href="#how-it-works" class="hide-sm">How it works</a>
