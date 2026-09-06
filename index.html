@@ -1,4 +1,39 @@
-<title>Subastian</title>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Subscription Management Software for Agencies | Subastian</title>
+<meta name="description" content="Subscription management software that builds your cheapest tool stack, blocks duplicate purchases, and warns you before every renewal. Join the roster free.">
+<link rel="canonical" href="https://subastian.us/">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
+<meta name="author" content="Subastian, LLC">
+<meta name="theme-color" content="#6D28D9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0A14" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Subastian">
+<meta property="og:url" content="https://subastian.us/">
+<meta property="og:title" content="Stop paying for software subscriptions you forgot you had">
+<meta property="og:description" content="Subscription management software that builds your cheapest tool stack, blocks duplicate purchases, and warns you before every renewal. Join the founding roster free.">
+<meta property="og:image" content="https://subastian.us/hero.jpg">
+<meta property="og:image:width" content="1400">
+<meta property="og:image:height" content="787">
+<meta property="og:image:alt" content="A conductor directing a ring of orbiting software subscription icons">
+<meta property="og:locale" content="en_US">
+
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Stop paying for software subscriptions you forgot you had">
+<meta name="twitter:description" content="Subscription management software that builds your cheapest tool stack, blocks duplicate purchases, and warns you before every renewal.">
+<meta name="twitter:image" content="https://subastian.us/hero.jpg">
+
+<link rel="icon" href="emblem.png" type="image/png">
+<link rel="apple-touch-icon" href="emblem.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="image" href="hero.jpg" fetchpriority="high">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <style>
   :root{
@@ -50,7 +85,7 @@
   }
 
   *{box-sizing:border-box;}
-  html{color-scheme:light dark;}
+  html{color-scheme:light dark; scroll-behavior:smooth;}
   body{
     margin:0;
     background:var(--bg);
@@ -58,6 +93,7 @@
     font-family:'Inter',system-ui,sans-serif;
     line-height:1.6;
     -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
   }
   ::selection{background:var(--accent-tint); color:var(--accent-strong);}
   a{color:inherit;}
@@ -72,8 +108,16 @@
   img,svg{max-width:100%;display:block;}
   :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:4px;}
   @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
     *{animation-duration:.001ms !important; transition-duration:.001ms !important;}
   }
+
+  .skip-link{
+    position:absolute; left:-9999px; top:8px; background:var(--accent-fill); color:#fff;
+    padding:10px 16px; border-radius:8px; font-size:14px; font-weight:600; z-index:100;
+    text-decoration:none;
+  }
+  .skip-link:focus{left:16px;}
 
   .wrap{max-width:1040px; margin:0 auto; padding:0 28px;}
   .prose{max-width:640px;}
@@ -81,14 +125,14 @@
   /* ---- top bar ---- */
   .topbar{
     display:flex; align-items:center; justify-content:space-between;
-    padding:22px 28px; max-width:1040px; margin:0 auto;
+    padding:22px 28px; max-width:1040px; margin:0 auto; gap:16px;
   }
   .brand{
     font-family:'Plus Jakarta Sans',sans-serif; font-weight:800;
-    font-size:18px; letter-spacing:.02em;
+    font-size:18px; letter-spacing:.02em; text-decoration:none;
   }
   .brand span{color:var(--accent);}
-  .topbar-links{display:flex; gap:24px; align-items:center;}
+  .topbar-links{display:flex; gap:22px; align-items:center;}
   .topbar-links a{
     font-size:13px; font-weight:600; text-decoration:none; color:var(--ink-soft);
   }
@@ -96,10 +140,17 @@
   .btn-cta{
     background:var(--accent-fill); color:#fff; border:none; border-radius:8px;
     padding:10px 18px; font-family:'Inter',sans-serif; font-weight:600; font-size:13.5px;
-    cursor:pointer; text-decoration:none; display:inline-block;
+    cursor:pointer; text-decoration:none; display:inline-block; text-align:center;
     transition:transform .15s ease, box-shadow .15s ease;
   }
-  .btn-cta:hover{ box-shadow:0 8px 20px -8px var(--accent); transform:translateY(-1px); }
+  .btn-cta:hover{ box-shadow:0 8px 20px -8px var(--accent); transform:translateY(-1px); color:#fff; }
+  .btn-ghost{
+    background:transparent; color:var(--ink-soft); border:1px solid var(--line);
+    border-radius:8px; padding:10px 18px; font-weight:600; font-size:13.5px;
+    text-decoration:none; display:inline-block; transition:border-color .15s ease, color .15s ease;
+  }
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent);}
+  .hide-sm{display:inline-block;}
 
   /* ---- eyebrow / movement marker ---- */
   .movement-mark{
@@ -121,21 +172,32 @@
   .band{background:var(--bg-band);}
 
   /* ---- hero ---- */
-  .hero{padding:64px 0 96px;}
+  .hero{padding:56px 0 88px;}
   .eyebrow{
     font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600;
     letter-spacing:.16em; text-transform:uppercase; color:var(--accent);
     margin-bottom:18px;
   }
   .hero h1{
-    font-size:clamp(34px,5.4vw,56px); font-weight:800; letter-spacing:-.02em;
-    max-width:14ch;
+    font-size:clamp(32px,5.2vw,54px); font-weight:800; letter-spacing:-.02em;
+    max-width:16ch;
   }
   .hero .sub{
     margin-top:22px; font-size:17px; color:var(--ink-soft); max-width:52ch;
   }
-  .hero-actions{display:flex; align-items:center; gap:18px; margin-top:34px; flex-wrap:wrap;}
-  .hero-note{font-size:13px; color:var(--ink-faint);}
+  .hero-actions{display:flex; align-items:center; gap:14px; margin-top:32px; flex-wrap:wrap;}
+  .hero-note{font-size:13px; color:var(--ink-faint); margin-top:16px;}
+  .hero-note b{color:var(--ink-soft); font-weight:600;}
+
+  /* ---- trust strip ---- */
+  .trust-strip{
+    display:flex; flex-wrap:wrap; gap:10px 26px; margin-top:26px;
+    padding-top:22px; border-top:1px solid var(--line);
+  }
+  .trust-item{
+    display:flex; align-items:center; gap:8px; font-size:12.5px; color:var(--ink-faint);
+  }
+  .trust-item svg{width:15px; height:15px; color:var(--money); flex-shrink:0;}
 
   /* ---- problem stats ---- */
   .stat-row{
@@ -166,6 +228,16 @@
   .feature h3{font-size:17px; font-weight:700;}
   .feature p{margin:10px 0 0; font-size:14px; color:var(--ink-soft);}
 
+  /* ---- personas ---- */
+  .persona-grid{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:36px;
+  }
+  .persona{
+    background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:26px 24px;
+  }
+  .persona h3{font-size:16px; font-weight:700; margin-bottom:10px;}
+  .persona p{margin:0; font-size:13.5px; color:var(--ink-soft);}
+
   /* ---- how it works ---- */
   .flow{display:flex; align-items:flex-start; gap:0; margin-top:44px; flex-wrap:wrap;}
   .flow-step{flex:1; min-width:150px; text-align:left; position:relative; padding-right:18px;}
@@ -174,8 +246,17 @@
     border:1px solid var(--accent); border-radius:999px; width:26px; height:26px;
     display:flex; align-items:center; justify-content:center; margin-bottom:14px;
   }
-  .flow-step h4{font-size:14.5px; font-weight:700; margin:0 0 6px;}
+  .flow-step h3{font-size:14.5px; font-weight:700; margin:0 0 6px;}
   .flow-step p{margin:0; font-size:13px; color:var(--ink-faint);}
+
+  /* ---- inline CTA band ---- */
+  .cta-inline{
+    margin-top:44px; padding:26px 28px; border:1px solid var(--line); border-radius:16px;
+    background:var(--surface); display:flex; align-items:center; justify-content:space-between;
+    gap:22px; flex-wrap:wrap;
+  }
+  .cta-inline p{margin:0; font-size:15px; color:var(--ink-soft); max-width:52ch;}
+  .cta-inline b{color:var(--ink);}
 
   /* ---- pricing ---- */
   .price-note{font-size:13.5px; color:var(--ink-faint); margin-top:8px;}
@@ -188,105 +269,172 @@
   }
   .price-card.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
   .price-tier{font-size:13px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em;}
+  .price-for{font-size:12.5px; color:var(--ink-faint); margin:-8px 0 0;}
   .price-amt{font-family:'IBM Plex Mono',monospace; font-size:30px; font-weight:600; font-variant-numeric:tabular-nums;}
   .price-amt small{font-size:13px; font-weight:500; color:var(--ink-faint);}
   .price-card ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:8px;}
   .price-card li{font-size:13px; color:var(--ink-soft); padding-left:18px; position:relative;}
   .price-card li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
+  .price-card .btn-cta, .price-card .btn-ghost{margin-top:auto; width:100%;}
   .badge{
     align-self:flex-start; background:var(--accent-tint); color:var(--accent-strong);
     font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; letter-spacing:.03em;
   }
 
+  /* ---- FAQ ---- */
+  .faq{margin-top:36px; border-top:1px solid var(--line);}
+  .faq details{border-bottom:1px solid var(--line);}
+  .faq summary{
+    cursor:pointer; padding:20px 40px 20px 0; position:relative; list-style:none;
+    font-family:'Plus Jakarta Sans',sans-serif; font-weight:700; font-size:16px; color:var(--ink);
+  }
+  .faq summary::-webkit-details-marker{display:none;}
+  .faq summary::after{
+    content:"+"; position:absolute; right:8px; top:50%; transform:translateY(-50%);
+    font-family:'IBM Plex Mono',monospace; font-size:20px; font-weight:500; color:var(--accent);
+  }
+  .faq details[open] summary::after{content:"–";}
+  .faq summary:hover{color:var(--accent);}
+  .faq .answer{padding:0 40px 22px 0; margin:0; font-size:14.5px; color:var(--ink-soft); max-width:68ch;}
+
   /* ---- finale / waitlist ---- */
-  .finale{padding:96px 0 100px;}
+  .finale{padding:88px 0 96px;}
   .finale-inner{
     background:var(--ink); color:var(--bg); border-radius:22px; padding:56px 48px;
     display:grid; grid-template-columns:1.1fr 1fr; gap:48px; align-items:start;
   }
-  :root[data-theme="dark"] .finale-inner, .finale-inner{ }
   .finale-inner h2{color:#fff; font-size:clamp(26px,3.4vw,34px);}
   .finale-inner .sub{color:#C9C3E0; font-size:14.5px; margin-top:14px; max-width:42ch;}
-  .roster-status{margin-top:26px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#9C93C4;}
+  .finale-list{margin:22px 0 0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px;}
+  .finale-list li{font-size:13.5px; color:#C9C3E0; padding-left:22px; position:relative;}
+  .finale-list li::before{
+    content:"✓"; position:absolute; left:0; color:#3FDDA0; font-weight:700;
+  }
+  .roster-status{margin-top:24px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:#9C93C4; max-width:40ch;}
+  .roster-status a{color:#B296F5;}
   form{display:flex; flex-direction:column; gap:12px;}
   .field{display:flex; flex-direction:column; gap:6px;}
   .field label{font-size:11.5px; font-weight:600; color:#B4ABDA; text-transform:uppercase; letter-spacing:.07em;}
   .field input, .field select{
     background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.18); color:#fff;
-    border-radius:8px; padding:11px 12px; font-family:'Inter',sans-serif; font-size:14px;
+    border-radius:8px; padding:11px 12px; font-family:'Inter',sans-serif; font-size:16px;
   }
   .field input::placeholder{color:#8981AC;}
   .field input:focus, .field select:focus{outline:2px solid #B296F5; outline-offset:2px; border-color:transparent;}
   .field select option{color:#000;}
-  .submit-row{margin-top:6px; display:flex; align-items:center; gap:14px; flex-wrap:wrap;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  .submit-row{margin-top:6px; display:flex; flex-direction:column; align-items:stretch; gap:10px;}
   .btn-submit{
-    background:#fff; color:var(--ink); border:none; border-radius:8px; padding:12px 20px;
-    font-weight:700; font-size:14px; cursor:pointer; font-family:'Inter',sans-serif;
+    background:#fff; color:var(--ink); border:none; border-radius:8px; padding:14px 20px;
+    font-weight:700; font-size:15px; cursor:pointer; font-family:'Inter',sans-serif;
+    transition:background .15s ease;
   }
   .btn-submit:hover{background:#EDE7FB;}
-  .submit-hint{font-size:12px; color:#8981AC;}
+  .submit-hint{font-size:12px; color:#8981AC; text-align:center;}
   .confirm-msg{
     display:none; background:rgba(63,221,160,.12); border:1px solid rgba(63,221,160,.4);
     color:#7CF0C0; border-radius:10px; padding:14px 16px; font-size:13.5px; margin-top:4px;
   }
   .confirm-msg.show{display:block;}
+  .confirm-msg a{color:#7CF0C0;}
+
+  /* ---- sticky mobile CTA ---- */
+  .sticky-cta{
+    display:none; position:fixed; left:0; right:0; bottom:0; z-index:60;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom));
+    background:var(--surface); border-top:1px solid var(--line);
+    box-shadow:0 -8px 24px -16px rgba(0,0,0,.5);
+    transition:transform .2s ease;
+  }
+  .sticky-cta.hidden{transform:translateY(110%);}
+  .sticky-cta .btn-cta{display:block; width:100%; padding:13px 18px; font-size:15px;}
 
   footer{padding:40px 0 56px;}
   .foot-row{
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
     border-top:1px solid var(--line); padding-top:24px; font-size:12.5px; color:var(--ink-faint);
   }
+  .foot-keywords{
+    margin-top:16px; font-size:12px; color:var(--ink-faint); line-height:1.7; max-width:80ch;
+  }
 
   @media (max-width:760px){
+    section{padding:64px 0;}
+    .hero{padding:32px 0 56px;}
     .stat-row{grid-template-columns:1fr;}
     .feature-grid{grid-template-columns:1fr;}
+    .persona-grid{grid-template-columns:1fr;}
     .price-grid{grid-template-columns:1fr;}
     .finale-inner{grid-template-columns:1fr; padding:36px 26px;}
-    .topbar{flex-wrap:wrap; gap:12px;}
+    .finale{padding:56px 0 64px;}
+    .topbar{flex-wrap:wrap; gap:12px; padding:16px 20px;}
+    .wrap{padding:0 20px;}
+    .hide-sm{display:none;}
+    .sticky-cta{display:block;}
+    body{padding-bottom:72px;}
+    .hero-actions .btn-cta, .hero-actions .btn-ghost{flex:1; min-width:150px;}
+    .btn-cta, .btn-ghost{padding:13px 18px;}
+    .cta-inline{flex-direction:column; align-items:flex-start;}
+    .cta-inline .btn-cta{width:100%;}
   }
 
   .brand{ display:flex; align-items:center; gap:8px; }
   .brand-mark{ width:24px; height:24px; object-fit:contain; }
 
   .hero-grid{ display:grid; grid-template-columns:1.15fr 1fr; gap:44px; align-items:center; }
-  .hero-art img{ width:100%; display:block; border-radius:20px; box-shadow:0 30px 70px -30px rgba(109,40,217,.5); }
+  .hero-art img{ width:100%; height:auto; display:block; border-radius:20px; box-shadow:0 30px 70px -30px rgba(109,40,217,.5); }
 
   .leak-grid{ display:grid; grid-template-columns:1.3fr .85fr; gap:44px; align-items:center; }
-  .leak-art img{ width:100%; max-width:320px; margin:0 auto; display:block; border-radius:18px; box-shadow:0 24px 50px -24px rgba(0,0,0,.35); }
+  .leak-art img{ width:100%; height:auto; max-width:320px; margin:0 auto; display:block; border-radius:18px; box-shadow:0 24px 50px -24px rgba(0,0,0,.35); }
 
   .score-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:28px; }
   .score-art{ width:126px; height:126px; object-fit:cover; border-radius:50%; flex-shrink:0; box-shadow:0 20px 44px -20px rgba(109,40,217,.55); border:1px solid var(--line); }
 
   @media (max-width:760px){
-    .hero-grid{ grid-template-columns:1fr; }
-    .leak-grid{ grid-template-columns:1fr; }
+    .hero-grid{ grid-template-columns:1fr; gap:32px; }
+    .leak-grid{ grid-template-columns:1fr; gap:32px; }
     .leak-art img{ max-width:220px; }
     .score-head{ flex-direction:column; align-items:flex-start; }
     .score-art{ width:88px; height:88px; }
   }
 </style>
+</head>
+<body>
 
-<div class="topbar">
-  <div class="brand"><img class="brand-mark" src="emblem.png" alt="" width="24" height="24">SUBA<span>STIAN</span></div>
-  <div class="topbar-links">
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Subastian home"><img class="brand-mark" src="emblem.png" alt="" width="24" height="24">SUBA<span>STIAN</span></a>
+  <nav class="topbar-links" aria-label="Primary">
+    <a href="#features" class="hide-sm">Features</a>
+    <a href="#how-it-works" class="hide-sm">How it works</a>
     <a href="#pricing">Pricing</a>
+    <a href="#faq" class="hide-sm">FAQ</a>
     <a href="#waitlist" class="btn-cta">Join the Roster</a>
-  </div>
-</div>
+  </nav>
+</header>
+
+<main id="main">
 
 <div class="wrap">
   <section class="hero hero-grid">
     <div>
-      <div class="eyebrow">Subastian · Pre-launch</div>
-      <h1>Stop conducting your subscriptions by accident.</h1>
-      <p class="sub">Subastian groups your software into cost-efficient stacks, blocks duplicate purchases before you make them, and never lets a tool expire without warning you first. We're in active development right now — join the founding roster to help shape it and lock in launch pricing.</p>
+      <p class="eyebrow">Subscription Management Software · Pre-launch</p>
+      <h1>Stop paying for software subscriptions you forgot you had.</h1>
+      <p class="sub">Subastian is a subscription tracker for people who run on software. It groups your tools into cost-efficient stacks, blocks duplicate purchases before you make them, and sends renewal alerts so no subscription auto-renews behind your back. We're in active development — join the founding roster to help shape it and lock in launch pricing.</p>
       <div class="hero-actions">
-        <a href="#waitlist" class="btn-cta">Join the Founding Roster</a>
-        <span class="hero-note">Built for affiliate marketers, agencies &amp; IT teams juggling a lot of tools.</span>
+        <a href="#waitlist" class="btn-cta">Join the Founding Roster — Free</a>
+        <a href="#pricing" class="btn-ghost">See launch pricing</a>
+      </div>
+      <p class="hero-note">Built for <b>affiliate marketers, agencies and IT teams</b> juggling a lot of tools.</p>
+      <div class="trust-strip">
+        <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>No credit card — nothing is billing yet</span>
+        <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Launch pricing locked for roster members</span>
+        <span class="trust-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M20 6L9 17l-5-5"/></svg>Founder-run in Denver, Colorado</span>
       </div>
     </div>
     <div class="hero-art">
-      <img src="hero.jpg" alt="Illustration of a conductor directing a ring of orbiting subscription icons" loading="lazy">
+      <img src="hero.jpg" alt="A conductor directing a ring of orbiting software subscription icons, illustrating Subastian's subscription management" width="1400" height="787" fetchpriority="high" decoding="async">
     </div>
   </section>
 </div>
@@ -296,124 +444,209 @@
     <div class="leak-grid">
       <div>
         <div class="movement-mark"><span class="num">I.</span><span class="label">The Leak</span></div>
-        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">The average professional pays for 17 tools. Uses nine.</h2>
-        <p class="prose" style="margin-top:16px; color:var(--ink-soft);">The other eight keep renewing quietly in the background. Industry research puts the average waste at $2,847 a year per person — and it's climbing as more AI tools get added to everyone's stack.</p>
+        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:24ch;">The average professional pays for 17 software subscriptions. Uses nine.</h2>
+        <p class="prose" style="margin-top:16px; color:var(--ink-soft);">The other eight keep renewing quietly in the background. Industry research puts the average wasted subscription spend at $2,847 a year per person — and it's climbing as more AI tools get added to everyone's stack. Unused subscriptions don't announce themselves; they just show up on the card each month until somebody goes looking.</p>
         <div class="stat-row">
           <div class="stat"><b>17</b><span>Avg. subscriptions held</span></div>
           <div class="stat"><b>9</b><span>Avg. actually used</span></div>
           <div class="stat"><b>$2,847</b><span>Wasted per year, avg.</span></div>
         </div>
-        <div class="cite">Source: Capterra, 2024 subscription-spend survey — industry-wide figures, not Subastian customer data. We're pre-launch, so we don't have customer numbers yet.</div>
+        <p class="cite">Source: Capterra, 2024 subscription-spend survey — industry-wide figures, not Subastian customer data. We're pre-launch, so we don't have customer numbers yet.</p>
       </div>
-      <div class="leak-art"><img src="vase.jpg" alt="A cracked vessel spilling app icons and coins, illustrating subscription waste" loading="lazy"></div>
+      <div class="leak-art"><img src="vase.jpg" alt="A cracked vessel spilling app icons and coins, illustrating wasted spend on unused software subscriptions" width="900" height="1125" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </div>
 
-<div class="wrap">
+<div class="wrap" id="features">
   <section>
     <div class="score-head">
       <div>
         <div class="movement-mark"><span class="num">II.</span><span class="label">The Score</span></div>
-        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:18ch;">Four moves, one conductor.</h2>
-        <p class="prose" style="margin-top:14px; color:var(--ink-soft);">Here's what Subastian is built to do — the mechanics, not the marketing.</p>
+        <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">Four ways Subastian cuts your subscription costs.</h2>
+        <p class="prose" style="margin-top:14px; color:var(--ink-soft);">Here's what our subscription management software is built to do — the mechanics, not the marketing.</p>
       </div>
-      <img class="score-art" src="orrery.jpg" alt="A brass and amethyst armillary sphere, echoing how Subastian orbits your tools around one center" loading="lazy">
+      <img class="score-art" src="orrery.jpg" alt="A brass and amethyst armillary sphere, echoing how Subastian orbits your software tools around one center" width="700" height="700" loading="lazy" decoding="async">
     </div>
     <div class="feature-grid">
       <div class="feature">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
-        <h3>Niche Stacks</h3>
-        <p>Tell it your niche — YouTube automation, SEO agency, podcast production — and it recommends the cheapest set of tools that actually work together, instead of you researching each one yourself.</p>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4 6h16M4 12h10M4 18h13"/></svg>
+        <h3>Niche Stacks — the cheapest tool stack for your work</h3>
+        <p>Tell it your niche — YouTube automation, SEO agency, podcast production — and it recommends the cheapest set of software tools that actually work together, instead of you researching and price-comparing each one yourself.</p>
       </div>
       <div class="feature">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3l7 3v6c0 4.4-3 8.2-7 9-4-.8-7-4.6-7-9V6l7-3z"/></svg>
-        <h3>Purchase Guard</h3>
-        <p>Before you buy a new tool, it checks your existing stack for heavy feature overlap and flags it if you're about to pay twice for the same job.</p>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3l7 3v6c0 4.4-3 8.2-7 9-4-.8-7-4.6-7-9V6l7-3z"/></svg>
+        <h3>Purchase Guard — duplicate subscription detection</h3>
+        <p>Before you buy a new tool, it checks your existing stack for heavy feature overlap and flags it if you're about to pay twice for the same job. Stop duplicate software purchases at the moment they'd happen, not on next month's statement.</p>
       </div>
       <div class="feature">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>
-        <h3>Neglect Radar</h3>
-        <p>Tracks which tools have gone quiet. Something unused for two weeks gets flagged with a one-click "pause and save" suggestion.</p>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3.2"/></svg>
+        <h3>Neglect Radar — find unused subscriptions</h3>
+        <p>Tracks which tools have gone quiet. Any subscription unused for two weeks gets flagged with a one-click "pause and save" suggestion, so you cancel unused subscriptions before they renew again.</p>
       </div>
       <div class="feature">
-        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3a5 5 0 00-5 5v3.5L5 15h14l-2-3.5V8a5 5 0 00-5-5z"/><path d="M10 18a2 2 0 004 0"/></svg>
-        <h3>Escalating Alerts</h3>
-        <p>A tool set to auto-renew earns five warnings — at 30, 7, 3 and 1 days out, then the day it happens — by email and push, so nothing lapses because of one missed message.</p>
+        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3a5 5 0 00-5 5v3.5L5 15h14l-2-3.5V8a5 5 0 00-5-5z"/><path d="M10 18a2 2 0 004 0"/></svg>
+        <h3>Escalating Alerts — renewal reminders that land</h3>
+        <p>A tool set to auto-renew earns five warnings — at 30, 7, 3 and 1 days out, then the day it happens — by email and push, so no software renewal slips through because of one missed message.</p>
       </div>
+    </div>
+
+    <div class="cta-inline">
+      <p><b>Want these four working on your stack first?</b> Founding roster members get early access and keep launch pricing when Subastian goes live.</p>
+      <a href="#waitlist" class="btn-cta">Join the Founding Roster</a>
     </div>
   </section>
 </div>
 
 <div class="band">
-  <div class="wrap" style="padding:88px 0;">
-    <div class="movement-mark"><span class="num">III.</span><span class="label">The Rehearsal</span></div>
-    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:16ch;">How it's designed to work.</h2>
-    <div class="flow">
-      <div class="flow-step"><div class="n mono">1</div><h4>Select niche</h4><p>Tell Subastian what kind of work you do.</p></div>
-      <div class="flow-step"><div class="n mono">2</div><h4>Get your stack</h4><p>It proposes the cheapest tool set that covers it.</p></div>
-      <div class="flow-step"><div class="n mono">3</div><h4>Guard activated</h4><p>Duplicate-purchase checks turn on automatically.</p></div>
-      <div class="flow-step"><div class="n mono">4</div><h4>Alerts on</h4><p>Renewal and neglect warnings start tracking your stack.</p></div>
+  <div class="wrap" style="padding:88px 0;" id="who-its-for">
+    <div class="movement-mark"><span class="num">III.</span><span class="label">The Players</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:22ch;">Built for the people with the messiest software stacks.</h2>
+    <p class="prose" style="margin-top:14px; color:var(--ink-soft);">If your tools outnumber your teammates, subscription management stops being a spreadsheet problem.</p>
+    <div class="persona-grid">
+      <div class="persona">
+        <h3>Affiliate marketers</h3>
+        <p>You trial a new tool most weeks and half of them auto-renew before you've decided. Subscription tracking for the people who buy the most software per head — with duplicate-purchase checks on every new tool you add.</p>
+      </div>
+      <div class="persona">
+        <h3>Agencies &amp; freelancers</h3>
+        <p>Per-client software costs are the quietest margin leak in the business. Group tools by client, watch what's actually used, and stop billing yourself for licenses a finished project left behind.</p>
+      </div>
+      <div class="persona">
+        <h3>IT &amp; ops teams</h3>
+        <p>SaaS spend management without the enterprise procurement suite. See the renewals coming, catch the shadow-IT overlap, and cut the licenses nobody has opened in a month.</p>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="wrap" id="pricing">
+<div class="wrap" id="how-it-works">
   <section>
-    <div class="movement-mark"><span class="num">IV.</span><span class="label">Choose Your Baton</span></div>
-    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:16ch;">Planned launch pricing.</h2>
+    <div class="movement-mark"><span class="num">IV.</span><span class="label">The Rehearsal</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">How subscription tracking works in Subastian.</h2>
+    <div class="flow">
+      <div class="flow-step"><div class="n mono" aria-hidden="true">1</div><h3>Select your niche</h3><p>Tell Subastian what kind of work you do.</p></div>
+      <div class="flow-step"><div class="n mono" aria-hidden="true">2</div><h3>Get your tool stack</h3><p>It proposes the cheapest software set that covers it.</p></div>
+      <div class="flow-step"><div class="n mono" aria-hidden="true">3</div><h3>Purchase Guard activates</h3><p>Duplicate-subscription checks turn on automatically.</p></div>
+      <div class="flow-step"><div class="n mono" aria-hidden="true">4</div><h3>Renewal alerts on</h3><p>Renewal and neglect warnings start tracking your stack.</p></div>
+    </div>
+  </section>
+</div>
+
+<div class="band">
+  <div class="wrap" style="padding:88px 0;" id="pricing">
+    <div class="movement-mark"><span class="num">V.</span><span class="label">Choose Your Baton</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">Planned subscription management pricing.</h2>
     <p class="price-note">Nothing is live or billing yet. Roster members who sign up before launch keep these rates locked in.</p>
     <div class="price-grid">
       <div class="price-card">
         <div class="price-tier">Starter</div>
         <div class="price-amt">$49<small>/mo</small></div>
+        <p class="price-for">For solo operators with one tool stack.</p>
         <ul>
           <li>1 niche, 1 stack</li>
-          <li>Purchase Guard</li>
-          <li>Standard alerts</li>
+          <li>Purchase Guard duplicate checks</li>
+          <li>Standard renewal alerts</li>
         </ul>
+        <a href="#waitlist" class="btn-ghost">Lock in $49/mo</a>
       </div>
       <div class="price-card featured">
         <span class="badge">Most anticipated</span>
         <div class="price-tier">Conductor Pro</div>
         <div class="price-amt">$99<small>/mo</small></div>
+        <p class="price-for">For marketers and small teams running many tools.</p>
         <ul>
           <li>Unlimited stacks</li>
-          <li>Neglect Radar</li>
+          <li>Neglect Radar for unused subscriptions</li>
           <li>Team seats</li>
         </ul>
+        <a href="#waitlist" class="btn-cta">Lock in $99/mo</a>
       </div>
       <div class="price-card">
         <div class="price-tier">Agency Maestro</div>
         <div class="price-amt">$299<small>/mo</small></div>
+        <p class="price-for">For agencies managing software for clients.</p>
         <ul>
           <li>Up to 20 client accounts</li>
-          <li>White-label</li>
+          <li>White-label reporting</li>
           <li>API access</li>
         </ul>
+        <a href="#waitlist" class="btn-ghost">Lock in $299/mo</a>
       </div>
+    </div>
+    <p class="price-note" style="margin-top:20px;">Joining the roster costs nothing and doesn't ask for a card — you're reserving the rate, not buying it today.</p>
+  </div>
+</div>
+
+<div class="wrap" id="faq">
+  <section>
+    <div class="movement-mark"><span class="num">VI.</span><span class="label">The Questions</span></div>
+    <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">Subscription management questions, answered.</h2>
+    <div class="faq">
+      <details>
+        <summary>What is Subastian?</summary>
+        <p class="answer">Subastian is subscription management software for people whose work runs on a pile of tools. It builds a cost-efficient tool stack for your niche, flags duplicate software purchases before you pay for the same job twice, spots subscriptions you've stopped using, and warns you ahead of every auto-renewal.</p>
+      </details>
+      <details>
+        <summary>Is Subastian available yet?</summary>
+        <p class="answer">Not yet — it's in active development and this is a pre-launch page. Joining the founding roster gets you early access when it opens, a say in what gets built next, and today's launch pricing locked in.</p>
+      </details>
+      <details>
+        <summary>Who is Subastian for?</summary>
+        <p class="answer">Affiliate marketers, agency owners, freelancers, IT and ops teams, and content creators — anyone carrying more software subscriptions than they can track in their head. If you're buying tools most months, that's the profile.</p>
+      </details>
+      <details>
+        <summary>How does it stop duplicate subscriptions?</summary>
+        <p class="answer">Purchase Guard checks a tool you're about to buy against the stack you already have. When the feature overlap is heavy, it flags it before you pay — so you find out you already own that capability at the moment of purchase, not on next month's statement.</p>
+      </details>
+      <details>
+        <summary>Will it remind me before a subscription renews?</summary>
+        <p class="answer">Yes. Anything set to auto-renew gets five escalating renewal reminders — 30 days out, then 7, 3 and 1 day before, then the day it charges — by email and push, so a single missed message doesn't cost you a year of a tool you meant to cancel.</p>
+      </details>
+      <details>
+        <summary>How does Subastian find unused subscriptions?</summary>
+        <p class="answer">Neglect Radar watches which tools have gone quiet. Anything unused for two weeks gets flagged with a one-click "pause and save" suggestion, so the decision to keep paying is one you actually make rather than one that happens to you.</p>
+      </details>
+      <details>
+        <summary>What will Subastian cost?</summary>
+        <p class="answer">Planned launch pricing is $49/month for Starter, $99/month for Conductor Pro, and $299/month for Agency Maestro. Nothing is billing yet — roster members who sign up before launch keep these rates when it goes live.</p>
+      </details>
+      <details>
+        <summary>Does it cost anything to join the founding roster?</summary>
+        <p class="answer">No. There's no charge and no credit card — the form opens a pre-filled email to the founder, and that's the whole signup. You'll hear directly from Daniel, and you can ask him anything before launch.</p>
+      </details>
+      <details>
+        <summary>Where do the subscription waste statistics come from?</summary>
+        <p class="answer">Capterra's 2024 subscription-spend survey. Those are industry-wide figures, not Subastian customer data — we're pre-launch, so we don't have customer numbers yet, and we'd rather tell you that than dress up someone else's research as our own.</p>
+      </details>
     </div>
   </section>
 </div>
 
 <div class="wrap">
   <section class="finale" id="waitlist">
-    <div class="movement-mark"><span class="num">V.</span><span class="label">Finale</span></div>
+    <div class="movement-mark"><span class="num">VII.</span><span class="label">Finale</span></div>
     <div class="finale-inner">
       <div>
         <h2>Be one of the first to conduct your stack.</h2>
         <p class="sub">We're finishing development on Subastian now. Founding roster members get early access, a say in what gets built next, and today's pricing locked in before public launch.</p>
-        <div class="roster-status" id="rosterStatus">No live signup database yet — this form emails the founder directly.</div>
+        <ul class="finale-list">
+          <li>Early access before public launch</li>
+          <li>Launch pricing locked in — $49, $99 or $299</li>
+          <li>Direct line to the founder on what gets built</li>
+          <li>Free to join. No credit card. No spam.</li>
+        </ul>
+        <p class="roster-status" id="rosterStatus">No live signup database yet — this form emails the founder directly at <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a>.</p>
       </div>
       <div>
-        <form id="rosterForm">
+        <form id="rosterForm" novalidate>
           <div class="field">
             <label for="rf-name">Name</label>
-            <input id="rf-name" name="name" type="text" placeholder="Jordan Lee" required>
+            <input id="rf-name" name="name" type="text" placeholder="Jordan Lee" autocomplete="name" required>
           </div>
           <div class="field">
             <label for="rf-email">Email</label>
-            <input id="rf-email" name="email" type="email" placeholder="you@example.com" required>
+            <input id="rf-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" inputmode="email" required>
           </div>
           <div class="field">
             <label for="rf-niche">What best describes you?</label>
@@ -425,16 +658,22 @@
               <option>Other</option>
             </select>
           </div>
-          <div class="submit-row">
-            <button type="submit" class="btn-submit">Reserve My Spot</button>
-            <span class="submit-hint">Opens a pre-filled email — hit send to confirm.</span>
+          <div class="hp" aria-hidden="true">
+            <label for="rf-company">Company (leave blank)</label>
+            <input id="rf-company" name="company" type="text" tabindex="-1" autocomplete="off">
           </div>
-          <div class="confirm-msg" id="confirmMsg">Your email app should have opened with your details filled in. Hit send there and you're on the founding roster.</div>
+          <div class="submit-row">
+            <button type="submit" class="btn-submit">Reserve My Spot — Free</button>
+            <span class="submit-hint">Opens a pre-filled email — hit send to confirm. No card, no spam.</span>
+          </div>
+          <p class="confirm-msg" id="confirmMsg" role="status" aria-live="polite"></p>
         </form>
       </div>
     </div>
   </section>
 </div>
+
+</main>
 
 <footer>
   <div class="wrap">
@@ -442,27 +681,278 @@
       <div>Subastian, LLC · Denver, CO</div>
       <div>Founded by Daniel Padilla · <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a></div>
     </div>
+    <p class="foot-keywords">Subastian is subscription management software and a SaaS subscription tracker in development for affiliate marketers, agencies, freelancers and IT teams — covering software renewal reminders, duplicate subscription detection, unused subscription tracking and SaaS spend management. <a href="#waitlist">Join the founding roster</a>.</p>
   </div>
 </footer>
+
+<div class="sticky-cta" id="stickyCta">
+  <a href="#waitlist" class="btn-cta">Join the Founding Roster — Free</a>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://subastian.us/#organization",
+      "name": "Subastian, LLC",
+      "url": "https://subastian.us/",
+      "logo": "https://subastian.us/emblem.png",
+      "email": "danielpadilla82tribe@gmail.com",
+      "founder": { "@type": "Person", "name": "Daniel Padilla" },
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Denver",
+        "addressRegion": "CO",
+        "addressCountry": "US"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://subastian.us/#website",
+      "url": "https://subastian.us/",
+      "name": "Subastian",
+      "description": "Subscription management software that builds your cheapest tool stack, blocks duplicate purchases, and warns you before every renewal.",
+      "publisher": { "@id": "https://subastian.us/#organization" },
+      "inLanguage": "en-US"
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": "https://subastian.us/#software",
+      "name": "Subastian",
+      "url": "https://subastian.us/",
+      "applicationCategory": "BusinessApplication",
+      "applicationSubCategory": "Subscription Management Software",
+      "operatingSystem": "Web",
+      "description": "Subastian is subscription management software for affiliate marketers, agencies and IT teams. It recommends the cheapest tool stack for your niche, flags duplicate software purchases, finds unused subscriptions, and sends escalating renewal reminders before anything auto-renews.",
+      "image": "https://subastian.us/hero.jpg",
+      "publisher": { "@id": "https://subastian.us/#organization" },
+      "featureList": [
+        "Niche tool stack recommendations",
+        "Duplicate subscription detection",
+        "Unused subscription tracking",
+        "Escalating renewal reminders by email and push"
+      ],
+      "offers": {
+        "@type": "AggregateOffer",
+        "priceCurrency": "USD",
+        "lowPrice": "49",
+        "highPrice": "299",
+        "offerCount": "3",
+        "availability": "https://schema.org/PreOrder"
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://subastian.us/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What is Subastian?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Subastian is subscription management software for people whose work runs on a pile of tools. It builds a cost-efficient tool stack for your niche, flags duplicate software purchases before you pay for the same job twice, spots subscriptions you've stopped using, and warns you ahead of every auto-renewal." }
+        },
+        {
+          "@type": "Question",
+          "name": "Is Subastian available yet?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Not yet — it's in active development and this is a pre-launch page. Joining the founding roster gets you early access when it opens, a say in what gets built next, and today's launch pricing locked in." }
+        },
+        {
+          "@type": "Question",
+          "name": "Who is Subastian for?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Affiliate marketers, agency owners, freelancers, IT and ops teams, and content creators — anyone carrying more software subscriptions than they can track in their head." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does it stop duplicate subscriptions?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Purchase Guard checks a tool you're about to buy against the stack you already have. When the feature overlap is heavy, it flags it before you pay, so you find out you already own that capability at the moment of purchase rather than on next month's statement." }
+        },
+        {
+          "@type": "Question",
+          "name": "Will it remind me before a subscription renews?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. Anything set to auto-renew gets five escalating renewal reminders — 30 days out, then 7, 3 and 1 day before, then the day it charges — by email and push." }
+        },
+        {
+          "@type": "Question",
+          "name": "How does Subastian find unused subscriptions?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Neglect Radar watches which tools have gone quiet. Anything unused for two weeks gets flagged with a one-click pause-and-save suggestion." }
+        },
+        {
+          "@type": "Question",
+          "name": "What will Subastian cost?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Planned launch pricing is $49/month for Starter, $99/month for Conductor Pro, and $299/month for Agency Maestro. Nothing is billing yet — roster members who sign up before launch keep these rates when it goes live." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does it cost anything to join the founding roster?",
+          "acceptedAnswer": { "@type": "Answer", "text": "No. There's no charge and no credit card — the form opens a pre-filled email to the founder, and that's the whole signup." }
+        },
+        {
+          "@type": "Question",
+          "name": "Where do the subscription waste statistics come from?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Capterra's 2024 subscription-spend survey. Those are industry-wide figures, not Subastian customer data — we're pre-launch, so we don't have customer numbers yet." }
+        }
+      ]
+    }
+  ]
+}
+</script>
 
 <script>
 (function(){
   var form = document.getElementById('rosterForm');
   var confirmMsg = document.getElementById('confirmMsg');
-  if(!form) return;
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = document.getElementById('rf-name').value.trim();
-    var email = document.getElementById('rf-email').value.trim();
-    var niche = document.getElementById('rf-niche').value;
-    if(!name || !email) return;
+  var FOUNDER = 'danielpadilla82tribe@gmail.com';
+
+  /* ------------------------------------------------------------------
+     GoHighLevel integration
+
+     Fill in ONE of these to send signups straight into GHL. Until one is
+     set the form keeps its current behaviour and emails the founder, so
+     the page is never broken by leaving this blank.
+
+     webhookUrl — preferred. Keeps this custom form and its styling.
+       In GHL: Automation > Create Workflow > Add New Trigger >
+       Inbound Webhook. Copy the URL it gives you and paste it below, then
+       add a Create/Update Contact action mapping email, firstName,
+       lastName and niche. Note this is a premium trigger on GHL's pricing.
+
+     formId — fallback if the webhook trigger isn't on your plan. Builds
+       the form in GHL instead and swaps this one out for their embed.
+       In GHL: Sites > Forms > Builder, then take the id out of the embed
+       code (the part after /widget/form/).
+
+     Never put a GHL API key or Private Integration Token here. This file
+     is public — anything in it is readable by anyone who views source.
+     The webhook URL is write-only and safe to expose; an API key is not.
+  ------------------------------------------------------------------ */
+  var GHL = {
+    webhookUrl: '',
+    formId: ''
+  };
+
+  var confirmHtml = {
+    sent: 'You’re on the founding roster — check your inbox for a note from Daniel.',
+    mail: 'Your email app should have opened with your details filled in — hit send there and you’re on the founding roster. '
+        + 'Nothing opened? Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.'
+  };
+
+  function show(html){
+    confirmMsg.innerHTML = html;
+    confirmMsg.classList.add('show');
+  }
+
+  function mailtoFallback(name, email, niche){
     var subject = 'Subastian founding roster signup';
     var body = 'Name: ' + name + '\nEmail: ' + email + '\nDescribes them as: ' + niche + '\n\n(Sent from the Subastian pre-launch page)';
-    var mailto = 'mailto:danielpadilla82tribe@gmail.com'
+    show(confirmHtml.mail);
+    window.location.href = 'mailto:' + FOUNDER
       + '?subject=' + encodeURIComponent(subject)
       + '&body=' + encodeURIComponent(body);
-    window.location.href = mailto;
-    confirmMsg.classList.add('show');
-  });
+  }
+
+  function postToGHL(payload){
+    // Try a real CORS request first: if GHL answers with the right headers
+    // we get a readable response and can tell a success from a failure.
+    return fetch(GHL.webhookUrl, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    }).then(function(r){
+      if(!r.ok) throw new Error('HTTP ' + r.status);
+      return 'cors';
+    }).catch(function(){
+      // Preflight was blocked. Retry opaquely — no-cors allows only simple
+      // content types, so the JSON goes out as text/plain, which webhook
+      // receivers parse anyway. The response is unreadable, so a resolved
+      // promise is the most we can treat as delivered.
+      return fetch(GHL.webhookUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {'Content-Type': 'text/plain;charset=UTF-8'},
+        body: JSON.stringify(payload)
+      }).then(function(){ return 'opaque'; });
+    });
+  }
+
+  // Swap the custom form for GHL's hosted embed when only a formId is set.
+  if(!GHL.webhookUrl && GHL.formId && form){
+    var frame = document.createElement('iframe');
+    frame.src = 'https://api.leadconnectorhq.com/widget/form/' + GHL.formId;
+    frame.style.cssText = 'width:100%;border:none;border-radius:10px;min-height:520px;';
+    frame.title = 'Join the Subastian founding roster';
+    form.parentNode.replaceChild(frame, form);
+    var embedJs = document.createElement('script');
+    embedJs.src = 'https://api.leadconnectorhq.com/js/form_embed.js';
+    document.body.appendChild(embedJs);
+    form = null;
+  }
+
+  // With GHL wired up the form no longer just opens an email — say so.
+  if(GHL.webhookUrl){
+    var status = document.getElementById('rosterStatus');
+    var hint = document.querySelector('.submit-hint');
+    if(status) status.textContent = 'Signups go straight to our CRM. We only email you about Subastian, and you can unsubscribe in one click.';
+    if(hint) hint.textContent = 'No card, no spam. Unsubscribe anytime.';
+  }
+
+  if(form){
+    var submitting = false;
+
+    form.addEventListener('submit', function(e){
+      e.preventDefault();
+      if(submitting) return;
+
+      var nameEl = document.getElementById('rf-name');
+      var emailEl = document.getElementById('rf-email');
+      var name = nameEl.value.trim();
+      var email = emailEl.value.trim();
+      var niche = document.getElementById('rf-niche').value;
+
+      // Honeypot: silently accept and drop bot submissions.
+      if(document.getElementById('rf-company').value){ return; }
+
+      if(!name){ nameEl.focus(); return; }
+      if(!email || email.indexOf('@') < 1 || email.indexOf('.') < 0){ emailEl.focus(); return; }
+
+      if(!GHL.webhookUrl){ mailtoFallback(name, email, niche); return; }
+
+      var btn = form.querySelector('.btn-submit');
+      var label = btn ? btn.textContent : '';
+      submitting = true;
+      if(btn){ btn.disabled = true; btn.textContent = 'Reserving…'; }
+
+      postToGHL({
+        name: name,
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ').slice(1).join(' '),
+        email: email,
+        niche: niche,
+        source: 'subastian.us founding roster',
+        submittedAt: new Date().toISOString()
+      }).then(function(){
+        show(confirmHtml.sent);
+        form.reset();
+      }).catch(function(){
+        // GHL unreachable — hand the lead to email rather than lose it.
+        mailtoFallback(name, email, niche);
+      }).then(function(){
+        submitting = false;
+        if(btn){ btn.disabled = false; btn.textContent = label; }
+      });
+    });
+  }
+
+  // Hide the sticky mobile CTA once the signup form is on screen.
+  var sticky = document.getElementById('stickyCta');
+  var waitlist = document.getElementById('waitlist');
+  if(sticky && waitlist && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      sticky.classList.toggle('hidden', entries[0].isIntersecting);
+    }, {threshold: 0.15}).observe(waitlist);
+  }
 })();
 </script>
+
+</body>
+</html>
