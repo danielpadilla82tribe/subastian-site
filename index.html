@@ -827,7 +827,7 @@
      The webhook URL is write-only and safe to expose; an API key is not.
   ------------------------------------------------------------------ */
   var GHL = {
-    webhookUrl: '',
+    webhookUrl: 'https://script.google.com/macros/s/AKfycbzp1-1msKNs4vsoTYxXpG-XXq9W0U-NkIWOndDl9qeieENcVxzoha2kaEyWxeHaK-czsw/exec',
     formId: ''
   };
 
@@ -892,7 +892,7 @@
   if(GHL.webhookUrl){
     var status = document.getElementById('rosterStatus');
     var hint = document.querySelector('.submit-hint');
-    if(status) status.textContent = 'Signups go straight to our CRM. We only email you about Subastian, and you can unsubscribe in one click.';
+    if(status) status.textContent = 'Signups are saved automatically. We only email you about Subastian, and you can unsubscribe anytime.';
     if(hint) hint.textContent = 'No card, no spam. Unsubscribe anytime.';
   }
 
