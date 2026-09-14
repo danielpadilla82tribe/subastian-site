@@ -41,16 +41,31 @@ different bytes behind one address. Ship `v02` instead.
 Pulled from the live site's CSS custom properties so the art and the page agree:
 
 | Token           | Light     | Dark      | Use in prompts                    |
-|-----------------|-----------|-----------|-----------------------------------|
+|-----------------|-----------|-----------|-------------------------------------|
 | `--accent`      | `#6D28D9` | `#B296F5` | the purple glow, backlight, aura  |
 | `--accent-strong`| `#54169E`| `#D2C0FA` | deep purple fog, shadow side      |
 | `--ink`         | `#15132A` | `#F2EFFA` | the suit black, stage dark        |
 | `--bg`          | `#F8F7FC` | `#0B0A14` | what the PNG will sit on          |
 
-**Gold is not currently in the design system.** Every prompt asks for gold trim
-and gold rim light, but the site has no gold token — its only non-purple accent
-is `--money: #0E9D6E` (green). Two options, and this is a real decision, not a
-detail:
+**Decided (Sep 2026): gold is in.** The founder's locked reference render for
+A1 (see `full-body-cinematic/prompts.md`) uses gold as a real accent — the halo
+ring, the baton glow — not just purple. Brand gold is `#D4AF37`, which is also
+what the Set C silhouette SVGs already use (`--gold` in each file's internal
+`<style>`). That closes the option below in favor of #1: gold is now a real
+brand token, so every future prompt and every future export (A, B, and any new
+C variations) should render it, not skip it.
+
+Still open: gold isn't yet wired into the site's own CSS custom properties
+(`index.html` only has `--accent`/`--accent-strong` purple and `--money`
+green) — someone should add a `--gold: #D4AF37` token there so the UI and the
+mascot are pulling from the same source, instead of the mascot art being the
+only place gold exists.
+
+<details><summary>Original open question (resolved above, kept for history)</summary>
+
+Every prompt asks for gold trim and gold rim light, but the site has no gold
+token — its only non-purple accent is `--money: #0E9D6E` (green). Two options
+were on the table:
 
 1. **Add gold as a brand token** (suggested `#D4AF37`, which holds up against
    `#6D28D9`). Then the mascot and the UI share a language.
@@ -60,6 +75,8 @@ detail:
 Generating nine images against a gold that never appears in the product is the
 outcome to avoid — the mascot would look like it belongs to a different brand
 than the site it sits on.
+
+</details>
 
 ## Keeping the character consistent
 
