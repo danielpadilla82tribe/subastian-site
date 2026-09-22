@@ -338,6 +338,25 @@
   .confirm-msg.show{display:block;}
   .confirm-msg a{color:#7CF0C0;}
 
+  /* Dark theme: the finale card flips to a light surface (it uses --ink),
+     so its text and form must switch to dark ink to stay readable. */
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]) .finale-inner{--f-h:#15132A; --f-body:#35305A; --f-muted:#4A4470; --f-label:#2A2550; --f-ph:#6B6490; --f-line:#C9BFEA; --f-field:#FFFFFF; --f-btn:#6D28D9; --f-btn-h:#54169E; --f-ok:#0B7A55; --f-link:#5B21B6;}
+  }
+  :root[data-theme="dark"] .finale-inner{--f-h:#15132A; --f-body:#35305A; --f-muted:#4A4470; --f-label:#2A2550; --f-ph:#6B6490; --f-line:#C9BFEA; --f-field:#FFFFFF; --f-btn:#6D28D9; --f-btn-h:#54169E; --f-ok:#0B7A55; --f-link:#5B21B6;}
+  .finale-inner h2{color:var(--f-h,#fff);}
+  .finale-inner .sub, .finale-list li{color:var(--f-body,#C9C3E0);}
+  .finale-list li::before{color:var(--f-ok,#3FDDA0);}
+  .roster-status{color:var(--f-muted,#9C93C4);}
+  .roster-status a{color:var(--f-link,#B296F5);}
+  .field label{color:var(--f-label,#B4ABDA);}
+  .field input, .field select{background:var(--f-field,rgba(255,255,255,.06)); border-color:var(--f-line,rgba(255,255,255,.18)); color:var(--f-h,#fff);}
+  .field input::placeholder{color:var(--f-ph,#8981AC);}
+  .btn-submit{background:var(--f-btn,#fff); color:var(--f-field,var(--ink));}
+  .btn-submit:hover{background:var(--f-btn-h,#EDE7FB);}
+  .submit-hint{color:var(--f-muted,#8981AC);}
+  .confirm-msg{color:var(--f-ok,#7CF0C0);}
+
   /* ---- sticky mobile CTA ---- */
   .sticky-cta{
     display:none; position:fixed; left:0; right:0; bottom:0; z-index:60;
@@ -681,7 +700,7 @@
       <div>Subastian, LLC · Denver, CO</div>
       <div>Founded by Daniel Padilla · <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a></div>
     </div>
-    <p class="foot-keywords">Subastian is subscription management software and a SaaS subscription tracker in development for affiliate marketers, agencies, freelancers and IT teams — covering software renewal reminders, duplicate subscription detection, unused subscription tracking and SaaS spend management. <a href="#waitlist">Join the founding roster</a>.</p>
+    <p class="foot-keywords">Subastian is subscription management software and a SaaS subscription tracker in development for affiliate marketers, agencies, freelancers and IT teams — covering software renewal reminders, duplicate subscription detection, unused subscription tracking and SaaS spend management. <a href="#waitlist">Join the founding roster</a> or try the free <a href="/stack-audit/">subscription waste calculator</a>.</p>
   </div>
 </footer>
 
