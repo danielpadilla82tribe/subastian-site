@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Subscription Waste Calculator — Free SaaS Stack Audit | Subastian</title>
+<meta name="description" content="Free subscription waste calculator. Enter your monthly software spend and tool count to estimate how much your SaaS stack wastes on unused and duplicate subscriptions.">
+<link rel="canonical" href="https://subastian.us/stack-audit/">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta name="theme-color" content="#6D28D9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0B0A14" media="(prefers-color-scheme: dark)">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Subastian">
+<meta property="og:url" content="https://subastian.us/stack-audit/">
+<meta property="og:title" content="How much is your software stack wasting? Free SaaS stack audit">
+<meta property="og:description" content="A 30-second subscription waste calculator for affiliate marketers, agencies and IT teams.">
+<meta property="og:image" content="https://subastian.us/hero.jpg">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/emblem.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+  :root{
+    --bg:#F8F7FC; --bg-band:#F1EDFA; --surface:#FFFFFF;
+    --ink:#15132A; --ink-soft:#5C5678; --ink-faint:#7A7399; --line:#E2DCF2;
+    --accent:#6D28D9; --accent-strong:#54169E; --accent-tint:#ECE3FB; --accent-fill:#6D28D9;
+    --money:#0E9D6E; --leak:#C2334D; --leak-tint:#FCEBEF; --focus:#6D28D9;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0B0A14; --bg-band:#131024; --surface:#18142C;
+      --ink:#F2EFFA; --ink-soft:#B4ADCF; --ink-faint:#8F88AE; --line:#2B2745;
+      --accent:#B296F5; --accent-strong:#D2C0FA; --accent-tint:#241D3E; --accent-fill:#7C4DEB;
+      --money:#3FDDA0; --leak:#FF8A9E; --leak-tint:#2A1520; --focus:#B296F5;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0B0A14; --bg-band:#131024; --surface:#18142C;
+    --ink:#F2EFFA; --ink-soft:#B4ADCF; --ink-faint:#8F88AE; --line:#2B2745;
+    --accent:#B296F5; --accent-strong:#D2C0FA; --accent-tint:#241D3E; --accent-fill:#7C4DEB;
+    --money:#3FDDA0; --leak:#FF8A9E; --leak-tint:#2A1520; --focus:#B296F5;
+  }
+  *{box-sizing:border-box;}
+  html{color-scheme:light dark;}
+  body{margin:0; background:var(--bg); color:var(--ink); font-family:'Inter',system-ui,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased;}
+  h1,h2,h3{font-family:'Plus Jakarta Sans','Inter',sans-serif; color:var(--ink); line-height:1.1; margin:0; text-wrap:balance;}
+  a{color:inherit;}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+  :focus-visible{outline:2px solid var(--focus); outline-offset:3px; border-radius:4px;}
+
+  .topbar{display:flex; align-items:center; justify-content:space-between; gap:16px; max-width:1040px; margin:0 auto; padding:22px 36px;}
+  .brand{display:flex; align-items:center; gap:8px; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:18px; text-decoration:none;}
+  .brand img{width:24px; height:24px;}
+  .brand-name > span{color:var(--accent);}
+  .pill{font-family:'IBM Plex Mono',monospace; font-size:11.5px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; color:var(--accent); background:var(--accent-tint); padding:5px 12px; border-radius:999px;}
+
+  .wrap{max-width:1040px; margin:0 auto; padding:0 36px;}
+  .intro{padding:40px 0 36px; max-width:680px;}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12.5px; font-weight:600; letter-spacing:.1em; text-transform:uppercase; color:var(--accent); margin:0 0 14px;}
+  .intro h1{font-size:clamp(30px,4.6vw,46px); letter-spacing:-.02em;}
+  .intro p{color:var(--ink-soft); font-size:16.5px; margin:16px 0 0; max-width:58ch;}
+
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start; padding-bottom:40px;}
+  .card{background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:30px;}
+  .card h2{font-size:18px; margin-bottom:22px; display:flex; justify-content:space-between; align-items:baseline; gap:12px;}
+  .card h2 small{font-family:'Inter',sans-serif; font-weight:500; font-size:12px; color:var(--ink-faint);}
+
+  .ctl{margin-bottom:24px;}
+  .ctl-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px;}
+  .ctl label{font-size:14px; font-weight:600; color:var(--ink);}
+  .ctl output{font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; color:var(--accent);}
+  .ctl .scale{display:flex; justify-content:space-between; font-size:12px; color:var(--ink-faint); margin-top:4px;}
+  input[type=range]{width:100%; accent-color:var(--accent-fill); height:28px; cursor:pointer;}
+  select{width:100%; background:var(--bg); color:var(--ink); border:1px solid var(--line); border-radius:8px; padding:11px 12px; font:inherit; font-size:15px;}
+
+  .stats{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:18px;}
+  .stat{border-radius:12px; padding:16px; background:var(--bg-band); border:1px solid var(--line);}
+  .stat .k{font-size:11.5px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);}
+  .stat .v{font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; font-size:clamp(22px,3vw,28px); margin-top:4px; font-variant-numeric:tabular-nums;}
+  .stat.leak{background:var(--leak-tint); border-color:transparent;}
+  .stat.leak .k, .stat.leak .v{color:var(--leak);}
+  .rows{border-top:1px solid var(--line); padding-top:14px; font-size:14.5px;}
+  .rows div{display:flex; justify-content:space-between; padding:5px 0; color:var(--ink-soft);}
+  .rows b{color:var(--ink); font-variant-numeric:tabular-nums;}
+  .rows b.money{color:var(--money);}
+  .note{font-size:12.5px; color:var(--ink-faint); margin:14px 0 0;}
+
+  /* roster card: always dark, text always light — no theme flip */
+  .roster{background:#15132A; color:#E9E5F7; border-radius:18px; padding:30px; margin-top:24px;}
+  .roster h3{color:#fff; font-size:20px;}
+  .roster p{color:#C9C3E0; font-size:14px; margin:8px 0 18px;}
+  .roster form{display:flex; flex-direction:column; gap:12px;}
+  .roster label{font-size:11.5px; font-weight:600; letter-spacing:.07em; text-transform:uppercase; color:#D2CBEF;}
+  .roster input{font-weight:400 !important; text-transform:none; letter-spacing:normal; width:100%; margin-top:6px; background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.24); color:#fff; border-radius:8px; padding:11px 12px; font:inherit; font-size:16px;}
+  .roster input::placeholder{color:#A49CC8;}
+  .roster input:focus{outline:2px solid #B296F5; outline-offset:2px; border-color:transparent;}
+  .roster button{margin-top:6px; background:#fff; color:#15132A; border:none; border-radius:8px; padding:14px 20px; font:inherit; font-weight:700; font-size:15px; cursor:pointer;}
+  .roster button:hover{background:#EDE7FB;}
+  .roster button:disabled{opacity:.7; cursor:wait;}
+  .roster .fine{font-size:12px; color:#A49CC8; text-align:center; margin:4px 0 0;}
+  .hp{position:absolute; left:-9999px; width:1px; height:1px; overflow:hidden;}
+  .done{display:none; background:rgba(63,221,160,.12); border:1px solid rgba(63,221,160,.4); color:#7CF0C0; border-radius:10px; padding:14px 16px; font-size:14px;}
+  .done.show{display:block;}
+  .done a{color:#7CF0C0;}
+
+  .how{background:var(--bg-band); padding:48px 0; margin-top:16px;}
+  .how h2{font-size:clamp(22px,3vw,28px); margin-bottom:14px;}
+  .how p{color:var(--ink-soft); max-width:68ch; font-size:15px;}
+  .how a{color:var(--accent); font-weight:600;}
+
+  footer{padding:32px 0 48px; font-size:13px; color:var(--ink-faint);}
+  footer .wrap{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;}
+
+  @media (max-width:820px){
+    .grid{grid-template-columns:1fr;}
+    .wrap, .topbar{padding-left:16px; padding-right:16px;}
+    .card, .roster{padding:22px;}
+  }
+  @media (prefers-reduced-motion: reduce){*{transition:none !important;}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="/" aria-label="Subastian home"><img src="/emblem.png" alt="" width="24" height="24"><span class="brand-name">SUBA<span>STIAN</span></span></a>
+  <span class="pill">Free stack audit</span>
+</header>
+
+<main>
+  <div class="wrap">
+    <section class="intro">
+      <p class="eyebrow">Subscription waste calculator</p>
+      <h1>How much is your software stack really costing you?</h1>
+      <p>Move the sliders to match your tools and spend. You'll get a rough estimate of how much of your SaaS budget is going to subscriptions nobody uses — in about 30 seconds, no signup needed.</p>
+    </section>
+
+    <div class="grid">
+      <section class="card" aria-labelledby="in-h">
+        <h2 id="in-h">1. Your software profile</h2>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="spend">Total monthly software spend</label><output id="spendOut" for="spend">$650/mo</output></div>
+          <input id="spend" type="range" min="50" max="3000" step="25" value="650">
+          <div class="scale"><span>$50</span><span>$1,500</span><span>$3,000+</span></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="subs">Active paid subscriptions</label><output id="subsOut" for="subs">14 tools</output></div>
+          <input id="subs" type="range" min="3" max="40" step="1" value="14">
+          <div class="scale"><span>3</span><span>20</span><span>40+</span></div>
+        </div>
+
+        <div class="ctl">
+          <div class="ctl-head"><label for="team">Team size (seats)</label><output id="teamOut" for="team">3 people</output></div>
+          <input id="team" type="range" min="1" max="25" step="1" value="3">
+          <div class="scale"><span>Solo</span><span>25+</span></div>
+        </div>
+
+        <div class="ctl" style="margin-bottom:0">
+          <label for="niche" style="display:block;margin-bottom:8px">What best describes your business?</label>
+          <select id="niche">
+            <option>Affiliate marketing</option>
+            <option>Agency / freelancer</option>
+            <option>Content creator / media</option>
+            <option>E-commerce / DTC</option>
+            <option>SaaS / indie developer</option>
+            <option>IT / ops team</option>
+          </select>
+        </div>
+      </section>
+
+      <div>
+        <section class="card" aria-labelledby="out-h" aria-live="polite">
+          <h2 id="out-h">2. Your stack snapshot <small>Estimate</small></h2>
+          <div class="stats">
+            <div class="stat"><div class="k">Annual spend</div><div class="v" id="annual">$7,800</div></div>
+            <div class="stat leak"><div class="k">Likely wasted / yr</div><div class="v" id="waste">~$2,496</div></div>
+          </div>
+          <div class="rows">
+            <div><span>Likely idle or duplicate tools</span><b id="idle">~5 tools</b></div>
+            <div><span>Possible monthly savings</span><b class="money" id="monthly">~$208/mo</b></div>
+            <div><span>Spend per seat</span><b id="perSeat">$217/mo</b></div>
+          </div>
+          <p class="note">This is a rough planning estimate, not a measurement of your account. It assumes about a third of tools and spend go unused or overlap — in line with published industry surveys of subscription waste. Your real number depends on your stack.</p>
+        </section>
+
+        <section class="roster" id="roster" aria-labelledby="r-h">
+          <h3 id="r-h">Want Subastian to find the exact number?</h3>
+          <p>Subastian is in active development. Join the free founding roster for early access and launch pricing locked in. No credit card.</p>
+          <form id="rosterForm" novalidate>
+            <label>First name<input id="rf-name" name="name" type="text" autocomplete="given-name" placeholder="Jordan" required></label>
+            <label>Email<input id="rf-email" name="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required></label>
+            <div class="hp" aria-hidden="true"><label>Company (leave blank)<input id="rf-company" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <button type="submit">Join the Free Founding Roster →</button>
+            <p class="fine">No card, no spam. Unsubscribe anytime.</p>
+          </form>
+          <div class="done" id="done" role="status"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <section class="how">
+    <div class="wrap">
+      <h2>What a SaaS stack audit looks for</h2>
+      <p>Most subscription waste comes from three places: tools nobody has opened in weeks, two tools doing the same job, and annual plans that auto-renew before anyone reviews them. Subastian is being built to catch all three automatically — Neglect Radar flags idle tools, Purchase Guard spots duplicates before you buy, and five-stage renewal alerts warn you before every charge. <a href="/">See how Subastian works →</a></p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Subastian, LLC · Denver, CO</span>
+    <span><a href="/">Home</a> · <a href="mailto:danielpadilla82tribe@gmail.com">Contact the founder</a></span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbzp1-1msKNs4vsoTYxXpG-XXq9W0U-NkIWOndDl9qeieENcVxzoha2kaEyWxeHaK-czsw/exec';
+  var FOUNDER = 'danielpadilla82tribe@gmail.com';
+  var IDLE_SHARE = 0.35, WASTE_SHARE = 0.32;
+
+  var $ = function(id){ return document.getElementById(id); };
+  var usd = function(n){ return '$' + Math.round(n).toLocaleString('en-US'); };
+  var spend = $('spend'), subs = $('subs'), team = $('team');
+
+  function calc(){
+    var m = +spend.value, s = +subs.value, t = +team.value;
+    var r = {
+      monthly: m, subs: s, team: t,
+      annual: m * 12,
+      waste: Math.round(m * 12 * WASTE_SHARE),
+      idle: Math.max(1, Math.round(s * IDLE_SHARE)),
+      save: Math.round(m * WASTE_SHARE)
+    };
+    $('spendOut').textContent = usd(m) + (m >= 3000 ? '+' : '') + '/mo';
+    $('subsOut').textContent = s + (s >= 40 ? '+' : '') + ' tools';
+    $('teamOut').textContent = t + (t === 1 ? ' person' : ' people');
+    $('annual').textContent = usd(r.annual);
+    $('waste').textContent = '~' + usd(r.waste);
+    $('idle').textContent = '~' + r.idle + (r.idle === 1 ? ' tool' : ' tools');
+    $('monthly').textContent = '~' + usd(r.save) + '/mo';
+    $('perSeat').textContent = usd(m / t) + '/mo';
+    return r;
+  }
+  [spend, subs, team].forEach(function(el){ el.addEventListener('input', calc); });
+  calc();
+
+  // Keep an affiliate tag (?via= or ?aff= or ?ref=) with the lead.
+  var q = new URLSearchParams(location.search);
+  var ref = q.get('via') || q.get('aff') || q.get('ref') || '';
+
+  var form = $('rosterForm'), done = $('done'), busy = false;
+  function show(html){ done.innerHTML = html; done.classList.add('show'); }
+
+  function send(payload){
+    return fetch(WEBHOOK, {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload)})
+      .then(function(r){ if(!r.ok) throw new Error(r.status); })
+      .catch(function(){
+        return fetch(WEBHOOK, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain;charset=UTF-8'}, body:JSON.stringify(payload)});
+      });
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    if(busy) return;
+    if($('rf-company').value) return; // honeypot
+    var nameEl = $('rf-name'), emailEl = $('rf-email');
+    var name = nameEl.value.trim(), email = emailEl.value.trim();
+    if(!name){ nameEl.focus(); return; }
+    if(email.indexOf('@') < 1 || email.indexOf('.') < 0){ emailEl.focus(); return; }
+
+    var r = calc(), btn = form.querySelector('button'), label = btn.textContent;
+    busy = true; btn.disabled = true; btn.textContent = 'Reserving…';
+
+    send({
+      name: name, firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '),
+      email: email, niche: $('niche').value,
+      source: 'subastian.us stack audit', affiliateRef: ref,
+      monthlySpend: r.monthly, subscriptionCount: r.subs, teamSize: r.team, estimatedAnnualWaste: r.waste,
+      submittedAt: new Date().toISOString()
+    }).then(function(){
+      form.style.display = 'none';
+      show('You’re on the founding roster, ' + name.split(' ')[0].replace(/[<>&"]/g,'') + '. Daniel will email you when early access opens — your launch pricing is locked in.');
+    }).catch(function(){
+      show('Something went wrong sending that. Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.');
+    }).then(function(){ busy = false; btn.disabled = false; btn.textContent = label; });
+  });
+})();
+</script>
+</body>
+</html>
