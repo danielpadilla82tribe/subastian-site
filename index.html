@@ -169,6 +169,7 @@
   }
 
   section{padding:88px 0;}
+  .band-inner{padding-top:88px; padding-bottom:88px;}
   .band{background:var(--bg-band);}
 
   /* ---- hero ---- */
@@ -265,7 +266,7 @@
   }
   .price-card{
     background:var(--surface); border:1px solid var(--line); border-radius:16px;
-    padding:28px 24px; display:flex; flex-direction:column; gap:14px;
+    padding:28px 24px; display:flex; flex-direction:column; gap:14px; position:relative;
   }
   .price-card.featured{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent);}
   .price-tier{font-size:13px; font-weight:600; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em;}
@@ -277,7 +278,7 @@
   .price-card li::before{content:"—"; position:absolute; left:0; color:var(--accent);}
   .price-card .btn-cta, .price-card .btn-ghost{margin-top:auto; width:100%;}
   .badge{
-    align-self:flex-start; background:var(--accent-tint); color:var(--accent-strong);
+    position:absolute; top:-11px; left:22px; border:1px solid var(--accent); background:var(--accent-tint); color:var(--accent-strong);
     font-size:11px; font-weight:700; padding:3px 9px; border-radius:999px; letter-spacing:.03em;
   }
 
@@ -373,12 +374,19 @@
     display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
     border-top:1px solid var(--line); padding-top:24px; font-size:12.5px; color:var(--ink-faint);
   }
+  .foot-links{display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:18px;}
+  .foot-links a{font-size:13px; font-weight:600; color:var(--ink-soft); text-decoration:none;}
+  .foot-links a:hover{color:var(--accent);}
+  .text-link{color:var(--accent); font-weight:600;}
+  .partner-cta{margin-top:28px; border-color:var(--accent); background:linear-gradient(120deg, var(--surface), var(--accent-tint));}
+  .partner-kicker{display:block; font-family:'IBM Plex Mono',monospace; font-size:11px; font-weight:600; letter-spacing:.14em; text-transform:uppercase; color:var(--accent); margin-bottom:6px;}
   .foot-keywords{
     margin-top:16px; font-size:12px; color:var(--ink-faint); line-height:1.7; max-width:80ch;
   }
 
   @media (max-width:760px){
     section{padding:64px 0;}
+    .band-inner{padding-top:64px; padding-bottom:64px;}
     .hero{padding:32px 0 56px;}
     .stat-row{grid-template-columns:1fr;}
     .feature-grid{grid-template-columns:1fr;}
@@ -429,6 +437,7 @@
     <a href="#how-it-works" class="hide-sm">How it works</a>
     <a href="#pricing">Pricing</a>
     <a href="#faq" class="hide-sm">FAQ</a>
+    <a href="/partners/">Partners</a>
     <a href="#waitlist" class="btn-cta">Join the Roster</a>
   </nav>
 </header>
@@ -459,7 +468,7 @@
 </div>
 
 <div class="band">
-  <div class="wrap" style="padding:88px 0;">
+  <div class="wrap band-inner">
     <div class="leak-grid">
       <div>
         <div class="movement-mark"><span class="num">I.</span><span class="label">The Leak</span></div>
@@ -518,7 +527,7 @@
 </div>
 
 <div class="band">
-  <div class="wrap" style="padding:88px 0;" id="who-its-for">
+  <div class="wrap band-inner" id="who-its-for">
     <div class="movement-mark"><span class="num">III.</span><span class="label">The Players</span></div>
     <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:22ch;">Built for the people with the messiest software stacks.</h2>
     <p class="prose" style="margin-top:14px; color:var(--ink-soft);">If your tools outnumber your teammates, subscription management stops being a spreadsheet problem.</p>
@@ -535,6 +544,10 @@
         <h3>IT &amp; ops teams</h3>
         <p>SaaS spend management without the enterprise procurement suite. See the renewals coming, catch the shadow-IT overlap, and cut the licenses nobody has opened in a month.</p>
       </div>
+    </div>
+    <div class="cta-inline partner-cta">
+      <p><span class="partner-kicker">Founding Partner program</span><b>Your audience looks like this?</b> Creators, affiliate marketers, agencies and newsletter writers can apply now for a 40% recurring commission once Subastian launches.</p>
+      <a href="/partners/" class="btn-ghost">Become a Founding Partner</a>
     </div>
   </div>
 </div>
@@ -553,7 +566,7 @@
 </div>
 
 <div class="band">
-  <div class="wrap" style="padding:88px 0;" id="pricing">
+  <div class="wrap band-inner" id="pricing">
     <div class="movement-mark"><span class="num">V.</span><span class="label">Choose Your Baton</span></div>
     <h2 style="font-size:clamp(24px,3.2vw,32px); max-width:20ch;">Planned subscription management pricing.</h2>
     <p class="price-note">Nothing is live or billing yet. Roster members who sign up before launch keep these rates locked in.</p>
@@ -594,6 +607,7 @@
       </div>
     </div>
     <p class="price-note" style="margin-top:20px;">Joining the roster costs nothing and doesn't ask for a card — you're reserving the rate, not buying it today.</p>
+    <p class="price-note">Recommend software to your audience? Founding Partners are planned to earn 40% of these plans every month a referral stays subscribed. <a href="/partners/" class="text-link">See the partner program →</a></p>
   </div>
 </div>
 
@@ -632,7 +646,11 @@
       </details>
       <details>
         <summary>Does it cost anything to join the founding roster?</summary>
-        <p class="answer">No. There's no charge and no credit card — the form opens a pre-filled email to the founder, and that's the whole signup. You'll hear directly from Daniel, and you can ask him anything before launch.</p>
+        <p class="answer">No. There's no charge and no credit card — fill in the form at the bottom of this page and you're on the list. You'll hear directly from Daniel, and you can ask him anything before launch.</p>
+      </details>
+      <details>
+        <summary>Does Subastian have an affiliate or partner program?</summary>
+        <p class="answer">Yes — the Founding Partner program is open for applications now. Approved partners get early access, ready-made promotional material and a planned 40% recurring commission on referred customers once Subastian is live and the affiliate system is running. Nothing is paid out before launch. <a href="/partners/" class="text-link">Apply on the partners page.</a></p>
       </details>
       <details>
         <summary>Where do the subscription waste statistics come from?</summary>
@@ -700,6 +718,12 @@
       <div>Subastian, LLC · Denver, CO</div>
       <div>Founded by Daniel Padilla · <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a></div>
     </div>
+    <nav class="foot-links" aria-label="Footer">
+      <a href="#waitlist">Join the founding roster</a>
+      <a href="/stack-audit/">Subscription waste calculator</a>
+      <a href="/partners/">Founding Partner program</a>
+      <a href="#faq">FAQ</a>
+    </nav>
     <p class="foot-keywords">Subastian is subscription management software and a SaaS subscription tracker in development for affiliate marketers, agencies, freelancers and IT teams — covering software renewal reminders, duplicate subscription detection, unused subscription tracking and SaaS spend management. <a href="#waitlist">Join the founding roster</a> or try the free <a href="/stack-audit/">subscription waste calculator</a>.</p>
   </div>
 </footer>
@@ -804,7 +828,12 @@
         {
           "@type": "Question",
           "name": "Does it cost anything to join the founding roster?",
-          "acceptedAnswer": { "@type": "Answer", "text": "No. There's no charge and no credit card — the form opens a pre-filled email to the founder, and that's the whole signup." }
+          "acceptedAnswer": { "@type": "Answer", "text": "No. There's no charge and no credit card — fill in the form at the bottom of the page and you're on the list." }
+        },
+        {
+          "@type": "Question",
+          "name": "Does Subastian have an affiliate or partner program?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Yes. The Founding Partner program is open for applications at subastian.us/partners. Approved partners get early access, promotional material and a planned 40% recurring commission on referred customers once Subastian is live. Nothing is paid out before launch." }
         },
         {
           "@type": "Question",
