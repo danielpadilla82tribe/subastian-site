@@ -669,11 +669,12 @@
         <p class="sub">We're finishing development on Subastian now. Founding roster members get early access, a say in what gets built next, and today's pricing locked in before public launch.</p>
         <ul class="finale-list">
           <li>Early access before public launch</li>
+          <li>Free Subscription Audit Kit, emailed the moment you join</li>
           <li>Launch pricing locked in — $49, $99 or $299</li>
           <li>Direct line to the founder on what gets built</li>
           <li>Free to join. No credit card. No spam.</li>
         </ul>
-        <p class="roster-status" id="rosterStatus">No live signup database yet — this form emails the founder directly at <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a>.</p>
+        <p class="roster-status" id="rosterStatus">No live signup database yet — this form emails the founder directly at <a href="mailto:subastianllc@gmail.com">subastianllc@gmail.com</a>.</p>
       </div>
       <div>
         <form id="rosterForm" novalidate>
@@ -715,8 +716,8 @@
 <footer>
   <div class="wrap">
     <div class="foot-row">
-      <div>Subastian, LLC · Denver, CO</div>
-      <div>Founded by Daniel Padilla · <a href="mailto:danielpadilla82tribe@gmail.com">danielpadilla82tribe@gmail.com</a></div>
+      <div>Subastian, LLC · Denver, CO · <a href="/terms/">Terms</a> · <a href="/privacy/">Privacy</a> · <a href="/refund-policy/">Refunds</a></div>
+      <div>Founded by Daniel Padilla · <a href="mailto:subastianllc@gmail.com">subastianllc@gmail.com</a></div>
     </div>
     <nav class="foot-links" aria-label="Footer">
       <a href="#waitlist">Join the founding roster</a>
@@ -742,7 +743,7 @@
       "name": "Subastian, LLC",
       "url": "https://subastian.us/",
       "logo": "https://subastian.us/emblem.png",
-      "email": "danielpadilla82tribe@gmail.com",
+      "email": "subastianllc@gmail.com",
       "founder": { "@type": "Person", "name": "Daniel Padilla" },
       "address": {
         "@type": "PostalAddress",
@@ -850,7 +851,17 @@
 (function(){
   var form = document.getElementById('rosterForm');
   var confirmMsg = document.getElementById('confirmMsg');
-  var FOUNDER = 'danielpadilla82tribe@gmail.com';
+  var FOUNDER = 'subastianllc@gmail.com';
+
+  // Partner referral code from links like subastian.us/?ref=NAME, kept for this visit.
+  var REF = (function(){
+    try {
+      var q = new URLSearchParams(location.search);
+      var r = q.get('ref') || q.get('via') || '';
+      if(r){ r = r.replace(/[^A-Za-z0-9_-]/g,'').slice(0,40); sessionStorage.setItem('sub_ref', r); }
+      return r || sessionStorage.getItem('sub_ref') || '';
+    } catch(e){ return ''; }
+  })();
 
   /* ------------------------------------------------------------------
      GoHighLevel integration
@@ -880,7 +891,7 @@
   };
 
   var confirmHtml = {
-    sent: 'You’re on the founding roster — check your inbox for a note from Daniel.',
+    sent: 'You’re on the founding roster! Check your inbox for your free Subscription Audit Kit (and your spam folder, just in case).',
     mail: 'Your email app should have opened with your details filled in — hit send there and you’re on the founding roster. '
         + 'Nothing opened? Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.'
   };
@@ -976,6 +987,8 @@
         lastName: name.split(' ').slice(1).join(' '),
         email: email,
         niche: niche,
+        type: 'roster',
+        ref: REF,
         source: 'subastian.us founding roster',
         submittedAt: new Date().toISOString()
       }).then(function(){
