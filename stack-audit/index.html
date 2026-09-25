@@ -227,7 +227,7 @@
 
 <script>
 (function(){
-  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbzp1-1msKNs4vsoTYxXpG-XXq9W0U-NkIWOndDl9qeieENcVxzoha2kaEyWxeHaK-czsw/exec';
+  var WEBHOOK = 'https://script.google.com/macros/s/AKfycbyvksixB6fINYn89dmVtKRozuvALrFP_YH7y_cUv1RdUq6D60qx9Brz3G1VCsQl4kU2/exec';
   var FOUNDER = 'subastianllc@gmail.com';
   var IDLE_SHARE = 0.35, WASTE_SHARE = 0.32;
 
@@ -287,7 +287,7 @@
     send({
       name: name, firstName: name.split(' ')[0], lastName: name.split(' ').slice(1).join(' '),
       email: email, niche: $('niche').value,
-      source: 'subastian.us stack audit', affiliateRef: ref,
+      source: 'subastian.us stack audit', affiliateRef: ref, ref: ref, type: 'roster',
       monthlySpend: r.monthly, subscriptionCount: r.subs, teamSize: r.team, estimatedAnnualWaste: r.waste,
       submittedAt: new Date().toISOString()
     }).then(function(){
