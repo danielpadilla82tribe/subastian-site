@@ -128,6 +128,7 @@
   }
   @media (prefers-reduced-motion: reduce){*{transition:none !important;}}
 </style>
+<script src="/ph.js" defer></script>
 </head>
 <body>
 
@@ -292,6 +293,7 @@
       submittedAt: new Date().toISOString()
     }).then(function(){
       form.style.display = 'none';
+      if(window.subTrack) subTrack('roster_signup', { form: 'stack_audit', niche: $('niche').value, monthly_spend: r.monthly, tool_count: r.subs, team_size: r.team, referral_code: ref || null });
       show('You’re on the founding roster, ' + name.split(' ')[0].replace(/[<>&"]/g,'') + '. Daniel will email you when early access opens — your launch pricing is locked in.');
     }).catch(function(){
       show('Something went wrong sending that. Email <a href="mailto:' + FOUNDER + '">' + FOUNDER + '</a> and we’ll add you by hand.');

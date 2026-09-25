@@ -425,6 +425,7 @@
     .score-art{ width:88px; height:88px; }
   }
 </style>
+<script src="/ph.js" defer></script>
 </head>
 <body>
 
@@ -993,6 +994,7 @@
         submittedAt: new Date().toISOString()
       }).then(function(){
         show(confirmHtml.sent);
+        if(window.subTrack) subTrack('roster_signup', { form: 'home', niche: niche, referral_code: REF || null });
         form.reset();
       }).catch(function(){
         // GHL unreachable — hand the lead to email rather than lose it.
